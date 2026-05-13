@@ -121,12 +121,18 @@ This project builds from the structure and model lineup of Hopp's open-source no
 
 Hopp, D. (2022). *Benchmarking econometric and machine learning methodologies in nowcasting*. UNCTAD Research Paper No. 83.
 
-Original-style reference notebooks and inherited documentation are preserved under:
+Inherited README snapshots are preserved under:
 
 ```text
 archive/original_reference/
 ```
 
+The original `methodologies/` reference notebook folder is not included in this GitHub repository. A local copy was preserved outside the repo at:
+
+```text
+C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
+```
+
 ## License
 
-See `LICENSE`.
+This repository retains the original MIT license notice because the project builds on code adapted from Daniel Hopp's MIT-licensed nowcasting benchmark. See `LICENSE`.

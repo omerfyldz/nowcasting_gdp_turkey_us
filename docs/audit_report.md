@@ -289,6 +289,8 @@ Current archive locations:
 - `archive/logs/`
 - `archive/original_reference/`
 
+The original `methodologies/` reference notebook folder was preserved outside the repository at `C:\Users\asus\Desktop\methodologies_nowcasting_original_reference` before the GitHub cleanup commit.
+
 ## Final Assessment
 
 The empirical pipeline is now internally coherent enough to be turned into paper tables and a methodology section. The strongest paper framing is:

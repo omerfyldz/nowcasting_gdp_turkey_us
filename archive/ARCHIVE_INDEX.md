@@ -8,7 +8,7 @@ This directory preserves non-core material that is not required for the main emp
 - `handoff_notes/`: detailed development notes, historical decisions, and long-form handoff documents.
 - `diagnostics/`: one-off diagnostic scripts used during data and model validation.
 - `logs/`: model execution logs and feature-selection logs.
-- `original_reference/`: inherited/original benchmark reference material and prior README snapshots.
+- `original_reference/`: inherited/original README snapshots.
 
 ## Main Pipeline Location
 
@@ -28,4 +28,10 @@ The files in this archive are intentionally kept for transparency. They are not 
 ```bash
 python data/evaluate.py
 python data/generate_figures.py
+```
+
+The original `methodologies/` reference notebook folder was moved outside the repository before the GitHub cleanup commit:
+
+```text
+C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
 ```

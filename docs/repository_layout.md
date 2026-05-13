@@ -19,7 +19,9 @@ This project is organized as a research-code repository with active pipeline fil
 - `archive/handoff_notes/`: development handoff documents.
 - `archive/logs/`: execution logs.
 - `archive/diagnostics/`: one-off diagnostic scripts.
-- `archive/original_reference/`: inherited original-reference notebooks and README snapshots.
+- `archive/original_reference/`: inherited original README snapshots.
+
+The original `methodologies/` reference notebook folder is preserved outside the repository at `C:\Users\asus\Desktop\methodologies_nowcasting_original_reference`.
 - `archive/assistant_context/`: local assistant context files.
 
 ## Main Reproduction Commands

@@ -24,7 +24,8 @@ Expected:
 - Development handoff notes are under `archive/handoff_notes/`.
 - Logs are under `archive/logs/`.
 - One-off diagnostics are under `archive/diagnostics/`.
-- Original-reference material is under `archive/original_reference/`.
+- Original README snapshots are under `archive/original_reference/`.
+- The original `methodologies/` reference notebook folder is preserved outside the repository at `C:\Users\asus\Desktop\methodologies_nowcasting_original_reference`.
 - Assistant context files are under `archive/assistant_context/`.
 
 ## Suggested First Commit
