@@ -29,9 +29,3 @@ The files in this archive are intentionally kept for transparency. They are not 
 python data/evaluate.py
 python data/generate_figures.py
 ```
-
-The original `methodologies/` reference notebook folder was moved outside the repository before the GitHub cleanup commit:
-
-```text
-C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
-```

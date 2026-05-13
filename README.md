@@ -120,15 +120,3 @@ Interpretation:
 This project was inspired by the structure and model lineup of Hopp's open-source nowcasting benchmark:
 
 Hopp, D. (2022). *Benchmarking econometric and machine learning methodologies in nowcasting*. UNCTAD Research Paper No. 83.
-
-Inherited README snapshots are preserved under:
-
-```text
-archive/original_reference/
-```
-
-The original `methodologies/` reference notebook folder is not included in this GitHub repository. A local copy was preserved outside the repo at:
-
-```text
-C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
-```
