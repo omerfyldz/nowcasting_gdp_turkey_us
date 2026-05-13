@@ -1,0 +1,135 @@
+BVAR vars: 16 ( 8 monthly, 7 quarterly)
+BVAR fit 1 / 36 m1 2017-03-01 
+BVAR fit 1 / 36 m2 2017-03-01 
+BVAR fit 1 / 36 m3 2017-03-01 
+BVAR fit 2 / 36 m1 2017-06-01 
+BVAR fit 2 / 36 m2 2017-06-01 
+BVAR fit 2 / 36 m3 2017-06-01 
+BVAR fit 3 / 36 m1 2017-09-01 
+BVAR fit 3 / 36 m2 2017-09-01 
+BVAR fit 3 / 36 m3 2017-09-01 
+BVAR fit 4 / 36 m1 2017-12-01 
+BVAR fit 4 / 36 m2 2017-12-01 
+BVAR fit 4 / 36 m3 2017-12-01 
+4 / 36 done
+BVAR fit 5 / 36 m1 2018-03-01 
+BVAR fit 5 / 36 m2 2018-03-01 
+BVAR fit 5 / 36 m3 2018-03-01 
+BVAR fit 6 / 36 m1 2018-06-01 
+BVAR fit 6 / 36 m2 2018-06-01 
+BVAR fit 6 / 36 m3 2018-06-01 
+BVAR fit 7 / 36 m1 2018-09-01 
+BVAR fit 7 / 36 m2 2018-09-01 
+BVAR fit 7 / 36 m3 2018-09-01 
+BVAR fit 8 / 36 m1 2018-12-01 
+BVAR fit 8 / 36 m2 2018-12-01 
+BVAR fit 8 / 36 m3 2018-12-01 
+8 / 36 done
+BVAR fit 9 / 36 m1 2019-03-01 
+BVAR fit 9 / 36 m2 2019-03-01 
+BVAR fit 9 / 36 m3 2019-03-01 
+BVAR fit 10 / 36 m1 2019-06-01 
+BVAR fit 10 / 36 m2 2019-06-01 
+BVAR fit 10 / 36 m3 2019-06-01 
+BVAR fit 11 / 36 m1 2019-09-01 
+BVAR fit 11 / 36 m2 2019-09-01 
+BVAR fit 11 / 36 m3 2019-09-01 
+BVAR fit 12 / 36 m1 2019-12-01 
+BVAR fit 12 / 36 m2 2019-12-01 
+BVAR fit 12 / 36 m3 2019-12-01 
+12 / 36 done
+BVAR fit 13 / 36 m1 2020-03-01 
+BVAR fit 13 / 36 m2 2020-03-01 
+BVAR fit 13 / 36 m3 2020-03-01 
+BVAR fit 14 / 36 m1 2020-06-01 
+BVAR fit 14 / 36 m2 2020-06-01 
+BVAR fit 14 / 36 m3 2020-06-01 
+BVAR fit 15 / 36 m1 2020-09-01 
+BVAR fit 15 / 36 m2 2020-09-01 
+BVAR fit 15 / 36 m3 2020-09-01 
+BVAR fit 16 / 36 m1 2020-12-01 
+BVAR fit 16 / 36 m2 2020-12-01 
+BVAR fit 16 / 36 m3 2020-12-01 
+16 / 36 done
+BVAR fit 17 / 36 m1 2021-03-01 
+BVAR fit 17 / 36 m2 2021-03-01 
+BVAR fit 17 / 36 m3 2021-03-01 
+BVAR fit 18 / 36 m1 2021-06-01 
+BVAR fit 18 / 36 m2 2021-06-01 
+BVAR fit 18 / 36 m3 2021-06-01 
+BVAR fit 19 / 36 m1 2021-09-01 
+BVAR fit 19 / 36 m2 2021-09-01 
+BVAR fit 19 / 36 m3 2021-09-01 
+BVAR fit 20 / 36 m1 2021-12-01 
+BVAR fit 20 / 36 m2 2021-12-01 
+BVAR fit 20 / 36 m3 2021-12-01 
+20 / 36 done
+BVAR fit 21 / 36 m1 2022-03-01 
+BVAR fit 21 / 36 m2 2022-03-01 
+BVAR fit 21 / 36 m3 2022-03-01 
+BVAR fit 22 / 36 m1 2022-06-01 
+BVAR fit 22 / 36 m2 2022-06-01 
+BVAR fit 22 / 36 m3 2022-06-01 
+BVAR fit 23 / 36 m1 2022-09-01 
+BVAR fit 23 / 36 m2 2022-09-01 
+BVAR fit 23 / 36 m3 2022-09-01 
+BVAR fit 24 / 36 m1 2022-12-01 
+BVAR fit 24 / 36 m2 2022-12-01 
+BVAR fit 24 / 36 m3 2022-12-01 
+24 / 36 done
+BVAR fit 25 / 36 m1 2023-03-01 
+BVAR fit 25 / 36 m2 2023-03-01 
+BVAR fit 25 / 36 m3 2023-03-01 
+BVAR fit 26 / 36 m1 2023-06-01 
+BVAR fit 26 / 36 m2 2023-06-01 
+BVAR fit 26 / 36 m3 2023-06-01 
+BVAR fit 27 / 36 m1 2023-09-01 
+BVAR fit 27 / 36 m2 2023-09-01 
+BVAR fit 27 / 36 m3 2023-09-01 
+BVAR fit 28 / 36 m1 2023-12-01 
+BVAR fit 28 / 36 m2 2023-12-01 
+BVAR fit 28 / 36 m3 2023-12-01 
+28 / 36 done
+BVAR fit 29 / 36 m1 2024-03-01 
+BVAR fit 29 / 36 m2 2024-03-01 
+BVAR fit 29 / 36 m3 2024-03-01 
+BVAR fit 30 / 36 m1 2024-06-01 
+BVAR fit 30 / 36 m2 2024-06-01 
+BVAR fit 30 / 36 m3 2024-06-01 
+BVAR fit 31 / 36 m1 2024-09-01 
+BVAR fit 31 / 36 m2 2024-09-01 
+BVAR fit 31 / 36 m3 2024-09-01 
+BVAR fit 32 / 36 m1 2024-12-01 
+BVAR fit 32 / 36 m2 2024-12-01 
+BVAR fit 32 / 36 m3 2024-12-01 
+32 / 36 done
+BVAR fit 33 / 36 m1 2025-03-01 
+BVAR fit 33 / 36 m2 2025-03-01 
+BVAR fit 33 / 36 m3 2025-03-01 
+BVAR fit 34 / 36 m1 2025-06-01 
+BVAR fit 34 / 36 m2 2025-06-01 
+BVAR fit 34 / 36 m3 2025-06-01 
+BVAR fit 35 / 36 m1 2025-09-01 
+BVAR fit 35 / 36 m2 2025-09-01 
+BVAR fit 35 / 36 m3 2025-09-01 
+BVAR fit 36 / 36 m1 2025-12-01 
+BVAR fit 36 / 36 m2 2025-12-01 
+BVAR fit 36 / 36 m3 2025-12-01 
+ERROR at 2025-12-01 m3 : inv_sympd(): matrix is singular or not positive definite 
+36 / 36 done
+---  Pre-COVID  ---
+   m1   RMSFE= 0.0041753   MAE= 0.00334456 
+   m2   RMSFE= 0.0047283   MAE= 0.00374044 
+   m3   RMSFE= 0.00490305   MAE= 0.00372617 
+---  COVID  ---
+   m1   RMSFE= 0.0435044   MAE= 0.0248564 
+   m2   RMSFE= 0.034255   MAE= 0.0220416 
+   m3   RMSFE= 0.0243644   MAE= 0.0188269 
+---  Post-COVID  ---
+   m1   RMSFE= 0.0102001   MAE= 0.00781557 
+   m2   RMSFE= 0.00898393   MAE= 0.00780216 
+   m3   RMSFE= 0.011189   MAE= 0.00956066 
+---  Full  ---
+   m1   RMSFE= 0.0206333   MAE= 0.00981849 
+   m2   RMSFE= 0.0168545   MAE= 0.00959166 
+   m3   RMSFE= 0.0140312   MAE= 0.00982183 

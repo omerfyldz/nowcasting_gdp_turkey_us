@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import PyPDF2; print\\('ok'\\)\")",
+      "Bash(python -c \"import pdfminer; print\\('ok'\\)\")",
+      "Bash(pip list *)",
+      "Bash(pip install *)",
+      "Bash(python -c ' *)",
+      "Bash(python build_raw_data.py)",
+      "WebFetch(domain:research.stlouisfed.org)",
+      "WebSearch",
+      "WebFetch(domain:s3.amazonaws.com)",
+      "WebFetch(domain:users.ssc.wisc.edu)",
+      "WebFetch(domain:fg-research.com)",
+      "WebFetch(domain:rdrr.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:files.stlouisfed.org)",
+      "WebFetch(domain:www.chicagofed.org)",
+      "WebFetch(domain:fred.stlouisfed.org)",
+      "WebFetch(domain:www.columbia.edu)",
+      "WebFetch(domain:www.stlouisfed.org)",
+      "WebFetch(domain:search.r-project.org)",
+      "WebFetch(domain:www.philadelphiafed.org)",
+      "WebFetch(domain:www.nber.org)",
+      "Bash(python apply_transformations.py)",
+      "Bash(python stationarity_tests.py)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:papers.ssrn.com)",
+      "WebFetch(domain:pmc.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:www.bis.org)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\asus\\\\Desktop\\\\nowcasting_benchmark-main\\\\nowcasting_benchmark-main\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\asus\\\\Desktop\\\\nowcasting_benchmark-main\\\\nowcasting_benchmark-main\\\\model_notebooks\\\\\" -Filter \"*.ipynb\" | Measure-Object)"
+    ]
+  }
+}

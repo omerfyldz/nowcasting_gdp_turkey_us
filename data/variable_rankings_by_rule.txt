@@ -1,0 +1,255 @@
+==================================================================================
+VARIABLE RANKINGS BY RULE (NO ARBITRARY TOP-35)
+==================================================================================
+Training: 1959-01-01 to 2007-12-31 (195 quarterly obs)
+n_lags: 3
+
+----------------------------------------------------------------------------------
+CUMULATIVE IMPORTANCE CUTOFFS ACROSS ALL FOUR METHODS
+----------------------------------------------------------------------------------
+  Thresh   Lasso(#)       EN(#)          RF(#)          Stab(#)
+  ------   --------       ----           ----           -------
+    50%      1 (outbs          )   1 (outbs          )   1 (outbs          )  14 (amdmuox        )
+    60%      1 (outbs          )   1 (outbs          )   1 (outbs          )  18 (acogno         )
+    70%      4 (outnfb         )   4 (houstne        )   2 (outnfb         )  21 (ces9091000001  )
+    80%     15 (ces1021000001  )  15 (ulcbs          )   2 (outnfb         )  25 (ulcbs          )
+    90%     34 (dhlcrg3q086sbea)  35 (dhlcrg3q086sbea)   2 (outnfb         )  30 (clf16ov        )
+    95%     49 (dongrg3q086sbea)  50 (dongrg3q086sbea)   4 (ophpbs         )  32 (m2sl           )
+    99%     69 (tnwmvbsnncbx   )  70 (hnoremq027sx   )  22 (pcdgx          )  35 (realln         )
+
+----------------------------------------------------------------------------------
+OVERLAP BETWEEN RULE-BASED SETS
+----------------------------------------------------------------------------------
+  Thresh   Lasso    EN       RF       Stab     LnEn    LnEnR   LnEnRnS
+  ------   -----    --       --       ----     ----    -----   -------
+    50%       1       1        1       14        1       1        1
+    70%       4       4        2       21        4       2        2
+    80%      15      15        2       25       14       2        2
+    90%      34      35        2       30       34       2        2
+    95%      49      50        4       32       49       2        2
+    99%      69      70       22       35       68       7        4
+
+==================================================================================
+RECOMMENDED THRESHOLDS BY METHOD
+==================================================================================
+
+Stability (Meinshausen-Buhlmann 2010):
+  Rule: variables selected in >= 50% of bootstrap Lasso resamples.
+  Result: 14 vars at 50%, 25 vars at 80%
+
+RF Permutation Importance:
+  Rule: cumulative permutation importance threshold.
+  50%: 1 vars (stops at outbs)
+  80%: 2 vars (stops at outnfb)
+  90%: 2 vars (stops at outnfb)
+  95%: 4 vars (stops at ophpbs)
+  99%: 22 vars (stops at pcdgx)
+  NOTE: RF importance is extremely concentrated.
+  outbs alone = 62.5% of total. 80% reached at 2 vars.
+
+Lasso (|coef| at CV-selected alpha=2.477e-05):
+  Rule: cumulative absolute coefficient importance.
+  50%: 1 vars (stops at outbs)
+  80%: 15 vars (stops at ces1021000001)
+  90%: 34 vars (stops at dhlcrg3q086sbea)
+  95%: 49 vars (stops at dongrg3q086sbea)
+  99%: 69 vars (stops at tnwmvbsnncbx)
+
+ElasticNet (|coef| at alpha=0.0001, l1=0.250):
+  Rule: cumulative absolute coefficient importance.
+  50%: 1 vars (stops at outbs)
+  80%: 15 vars (stops at ulcbs)
+  90%: 35 vars (stops at dhlcrg3q086sbea)
+  95%: 50 vars (stops at dongrg3q086sbea)
+  99%: 70 vars (stops at hnoremq027sx)
+
+----------------------------------------------------------------------------------
+LASSO FULL RANKING (|coef|, alpha=2.477e-05)
+----------------------------------------------------------------------------------
+Total variables with non-zero coef: 90
+Total absolute coef sum: 0.0117
+
+  Rank  Feature                          |coef|       Cum%
+  ----  -------                          ------       ----
+     1  outbs                           0.007747     66.4%
+     2  gcec1                           0.000215     68.2%
+     3  houstne                         0.000155     69.5%
+     4  outnfb                          0.000135     70.7%
+     5  hwiuratio                       0.000125     71.7%
+     6  compapff                        0.000125     72.8%
+     7  ulcnfb                          0.000123     73.9%
+     8  andenox                         0.000119     74.9%
+     9  mortg10yrx                      0.000115     75.9%
+    10  housts                          0.000107     76.8%
+    11  busloans                        0.000105     77.7%
+    12  ces2000000008                   0.000098     78.5%
+    13  amdmuox                         0.000086     79.3%
+    14  ces9091000001                   0.000083     80.0%
+    15  ces1021000001                   0.000080     80.7% <-- 80%
+    16  manemp                          0.000077     81.3%
+    17  usserv                          0.000071     81.9%
+    18  acogno                          0.000070     82.5%
+    19  ddurrg3m086sbea                 0.000069     83.1%
+    20  nonrevsl                        0.000067     83.7%
+    21  uemp27ov                        0.000065     84.2%
+    22  a014re1q156nbea                 0.000065     84.8%
+    23  permitw                         0.000064     85.3%
+    24  m2sl                            0.000063     85.9%
+    25  slcex                           0.000063     86.4%
+    26  cusr0000sas                     0.000063     87.0%
+    27  hwiuratiox                      0.000054     87.4%
+    28  awotman                         0.000053     87.9%
+    29  ce16ov                          0.000053     88.3%
+    30  ahetpix                         0.000049     88.7%
+    31  ces9092000001                   0.000047     89.2%
+    32  tlbsnncbbdix                    0.000045     89.5%
+    33  ipdcongd                        0.000045     89.9%
+    34  dhlcrg3q086sbea                 0.000044     90.3% <-- 90%
+    35  expgsc1                         0.000044     90.7%
+    36  uemp15t26                       0.000043     91.0%
+    37  invest                          0.000042     91.4%
+    38  difsrg3q086sbea                 0.000039     91.7%
+    39  clf16ov                         0.000038     92.1%
+    40  uemplt5                         0.000038     92.4%
+    41  dodgrg3q086sbea                 0.000038     92.7%
+    42  fpix                            0.000038     93.0%
+    43  usgovt                          0.000037     93.4%
+    44  dspic96                         0.000036     93.7%
+    45  spcs10rsa                       0.000036     94.0%
+    46  liabpix                         0.000036     94.3%
+    47  unrate                          0.000036     94.6%
+    48  lns13023705                     0.000036     94.9%
+    49  dongrg3q086sbea                 0.000036     95.2% <-- 95%
+    50  gfdegdq188s                     0.000035     95.5%
+  ...  244 more variables with non-zero coef ...
+
+----------------------------------------------------------------------------------
+ELASTICNET FULL RANKING (|coef|, alpha=0.0001, l1=0.250)
+----------------------------------------------------------------------------------
+Total variables with non-zero coef: 90
+Total absolute coef sum: 0.0117
+
+  Rank  Feature                          |coef|       Cum%
+  ----  -------                          ------       ----
+     1  outbs                           0.007619     65.3%
+     2  outnfb                          0.000258     67.5%
+     3  gcec1                           0.000218     69.4%
+     4  houstne                         0.000154     70.7%
+     5  hwiuratio                       0.000125     71.8%
+     6  compapff                        0.000122     72.8%
+     7  andenox                         0.000118     73.8%
+     8  mortg10yrx                      0.000113     74.8%
+     9  housts                          0.000110     75.7%
+    10  busloans                        0.000106     76.6%
+    11  ces2000000008                   0.000098     77.5%
+    12  amdmuox                         0.000088     78.2%
+    13  ces9091000001                   0.000079     78.9%
+    14  ces1021000001                   0.000079     79.6%
+    15  ulcbs                           0.000074     80.2% <-- 80%
+    16  ddurrg3m086sbea                 0.000072     80.8%
+    17  usserv                          0.000071     81.4%
+    18  manemp                          0.000071     82.1%
+    19  nonrevsl                        0.000069     82.6%
+    20  acogno                          0.000069     83.2%
+    21  a014re1q156nbea                 0.000066     83.8%
+    22  m2sl                            0.000065     84.4%
+    23  slcex                           0.000065     84.9%
+    24  uemp27ov                        0.000064     85.5%
+    25  cusr0000sas                     0.000063     86.0%
+    26  permitw                         0.000063     86.5%
+    27  hwiuratiox                      0.000055     87.0%
+    28  awotman                         0.000053     87.5%
+    29  ce16ov                          0.000051     87.9%
+    30  ulcnfb                          0.000049     88.3%
+    31  ipdcongd                        0.000047     88.7%
+    32  ces9092000001                   0.000045     89.1%
+    33  tlbsnncbbdix                    0.000044     89.5%
+    34  ahetpix                         0.000044     89.9%
+    35  dhlcrg3q086sbea                 0.000044     90.3% <-- 90%
+    36  expgsc1                         0.000044     90.6%
+    37  invest                          0.000042     91.0%
+    38  dspic96                         0.000040     91.3%
+    39  uemplt5                         0.000040     91.7%
+    40  uemp15t26                       0.000040     92.0%
+    41  unrate                          0.000039     92.3%
+    42  difsrg3q086sbea                 0.000039     92.7%
+    43  fpix                            0.000038     93.0%
+    44  usgovt                          0.000038     93.3%
+    45  clf16ov                         0.000037     93.7%
+    46  dodgrg3q086sbea                 0.000037     94.0%
+    47  spcs10rsa                       0.000037     94.3%
+    48  lns13023705                     0.000036     94.6%
+    49  liabpix                         0.000036     94.9%
+    50  dongrg3q086sbea                 0.000035     95.2% <-- 95%
+  ...  244 more variables with non-zero coef ...
+
+==================================================================================
+95% CUMULATIVE SETS — PAIRWISE OVERLAP
+==================================================================================
+
+Lasso 95%:       49 vars
+EN 95%:          50 vars
+RF 95%:          4 vars
+Stab 95%:        32 vars
+
+Lasso n EN:      49 vars
+Lasso n RF:      2 vars
+Lasso n Stab:    31 vars
+Lasso n EN n RF: 2 vars
+ALL 4 at 95%:    2 vars
+  outbs
+  outnfb
+
+==================================================================================
+99% CUMULATIVE SETS — PAIRWISE OVERLAP
+==================================================================================
+
+Lasso 99%:       69 vars
+EN 99%:          70 vars
+RF 99%:          22 vars
+Stab 99%:        35 vars
+
+Lasso n EN:      68 vars
+Lasso n RF:      7 vars
+Lasso n EN n RF: 7 vars
+ALL 4 at 99%:    4 vars
+  hwiuratiox
+  outbs
+  outnfb
+  ulcnfb
+
+==================================================================================
+STABILITY >= 50% SET (Meinshausen-Buhlmann)
+==================================================================================
+
+26 vars
+
+  a014re1q156nbea                 Stab=61%  L#  22  E#  21  RF#   -
+  acogno                          Stab=60%  L#  18  E#  20  RF#   -
+  amdmuox                         Stab=61%  L#  13  E#  12  RF#   -
+  andenox                         Stab=87%  L#   8  E#   7  RF#   -
+  busloans                        Stab=84%  L#  11  E#  10  RF#   -
+  ces1021000001                   Stab=70%  L#  15  E#  14  RF#   -
+  ces2000000008                   Stab=88%  L#  12  E#  11  RF#   -
+  ces9091000001                   Stab=57%  L#  14  E#  13  RF#   -
+  ces9092000001                   Stab=58%  L#  31  E#  32  RF#   -
+  compapff                        Stab=72%  L#   6  E#   6  RF#   -
+  cusr0000sas                     Stab=54%  L#  26  E#  25  RF#   -
+  ddurrg3m086sbea                 Stab=61%  L#  19  E#  16  RF#   -
+  gcec1                           Stab=99%  L#   2  E#   3  RF#   -
+  houstne                         Stab=88%  L#   3  E#   4  RF#   -
+  housts                          Stab=64%  L#  10  E#   9  RF#   -
+  hwiuratio                       Stab=79%  L#   5  E#   5  RF#   -
+  hwiuratiox                      Stab=50%  L#  27  E#  27  RF#  13
+  invest                          Stab=56%  L#  37  E#  37  RF#   -
+  mortg10yrx                      Stab=61%  L#   9  E#   8  RF#   -
+  nonrevsl                        Stab=57%  L#  20  E#  19  RF#   -
+  outbs                           Stab=100%  L#   1  E#   1  RF#   1
+  outnfb                          Stab=86%  L#   4  E#   2  RF#   2
+  slcex                           Stab=52%  L#  25  E#  23  RF#   -
+  tlbsnncbbdix                    Stab=64%  L#  32  E#  33  RF#   -
+  ulcbs                           Stab=51%  L# 241  E#  15  RF#  10
+  usserv                          Stab=62%  L#  17  E#  17  RF#   -
+
+==================================================================================
+END

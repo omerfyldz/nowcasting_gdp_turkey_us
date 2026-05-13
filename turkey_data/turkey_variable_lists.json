@@ -1,0 +1,86 @@
+{
+  "target": "ngdprsaxdctrq",
+  "cat1": {
+    "features": [
+      "ngdprsaxdctrq"
+    ],
+    "total": 1
+  },
+  "cat2": {
+    "features": [
+      "ipi_sa",
+      "usd_try_avg",
+      "cpi_sa",
+      "fin_acc"
+    ],
+    "with_covid": true,
+    "total": 7
+  },
+  "cat3": {
+    "features": [
+      "altin_rezerv_var",
+      "auto_prod",
+      "bist100",
+      "consu_i",
+      "cpi_sa",
+      "deposit_i",
+      "doviz_rezerv_var",
+      "emp_rate",
+      "empl_num",
+      "fin_acc",
+      "ipi_sa",
+      "m3",
+      "maden_ciro_endeksi_sa",
+      "ppi",
+      "reer",
+      "resmi_rezerv_var",
+      "tax",
+      "total_prod",
+      "tourist",
+      "unemp_num",
+      "unemp_rate",
+      "usd_try_avg"
+    ],
+    "with_covid": true,
+    "total": 25
+  },
+  "covid_dummies": [
+    "covid_2020q2",
+    "covid_2020q3",
+    "covid_2020q4"
+  ],
+  "tier_c_dfm_only": [
+    "1week-repo",
+    "auto_exp_vol_i",
+    "auto_imp_vol_i",
+    "bus_conf",
+    "card_pmt_i",
+    "card_pmt_i_r",
+    "card_trans",
+    "commprop_sales_sa",
+    "cons_conf",
+    "cur_sa",
+    "dg_exp_vol_i",
+    "dg_imp_vol_i",
+    "elec_cons",
+    "elec_prod",
+    "exp_ind_auto",
+    "exp_ind_dg",
+    "exp_vol_i",
+    "hh_pmt",
+    "hh_pmt_r",
+    "house_sales_sa",
+    "household_credits",
+    "imp_ind_auto",
+    "imp_ind_dg",
+    "imp_vol_i",
+    "is_ekon_ciro_sa",
+    "loans",
+    "non_fin_firms_credits",
+    "real_gdp_i",
+    "retail_sales_nsa",
+    "retail_sales_sa",
+    "sanayi_ins_tic_ciro_sa",
+    "total_prop_sales"
+  ]
+}

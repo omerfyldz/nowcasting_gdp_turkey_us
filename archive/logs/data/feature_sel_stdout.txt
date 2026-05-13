@@ -1,0 +1,37 @@
+Loading data...
+Train window: 1959-01-01 to 2007-12-31 (588 monthly rows)
+Dropping 1 columns with no data in train window: ['ppifis']
+Flattening + mean-filling + restricting to Q-end months...
+X shape: (195, 1176) | y shape: (195,)
+
+[1/4] Fitting LassoCV with TimeSeriesSplit...
+      Lasso alpha=2.477e-05, top-35 head: ['outbs', 'gcec1', 'houstne', 'outnfb', 'hwiuratio']
+
+[2/4] Fitting ElasticNetCV with widened l1_ratio grid...
+      EN alpha=0.0001, l1_ratio=0.250, top-35 head: ['outbs', 'outnfb', 'gcec1', 'houstne', 'hwiuratio']
+
+[3/4] RF grid search (TimeSeriesSplit) then permutation importance...
+      Best RF params: {'max_features': 0.33, 'min_samples_leaf': 1}, CV MSE=1.159e-05
+      Computing permutation importance (n_repeats=10)...
+      RF top-35 head: ['outbs', 'outnfb', 'gpdic1', 'ophpbs', 'fpix']
+
+[4/4] Lasso stability selection (100 resamples, 75% subsample)...
+      7/35 variables selected in >=80% of resamples
+
+========================================================
+Top-35 Lasso        : 35
+Top-35 ElasticNet   : 35
+Top-35 RF perm-imp  : 35
+Top-35 Lasso (stab) : 35
+Pairwise overlaps:
+  Lasso vs EN     : 34/35
+  Lasso vs RF     : 5/35  (low expected: linear vs non-linear)
+  EN vs RF        : 6/35
+  Lasso vs Stab   : 28/35  (high = picks are stable)
+Union   (robust set): 65
+Inter.  (core set)  : 5
+========================================================
+
+Saved C:/Users/asus/Desktop/nowcasting_benchmark-main/nowcasting_benchmark-main/data\feature_selection_ensemble.xlsx
+
+Saved to C:/Users/asus/Desktop/nowcasting_benchmark-main/nowcasting_benchmark-main/data\feature_selection_ensemble.txt

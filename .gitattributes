@@ -1,0 +1,19 @@
+* text=auto eol=lf
+
+*.md text eol=lf
+*.py text eol=lf
+*.R text eol=lf
+*.r text eol=lf
+*.csv text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.ipynb text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.xlsx binary
+*.xls binary
+*.pdf binary
+
+*.html linguist-detectable=false

@@ -1,0 +1,11 @@
+# Core Python dependencies used by the data, evaluation, and figure scripts.
+# Some model notebooks also require additional Python/R packages documented
+# inside the notebooks, especially for BVAR, DFM, MIDAS, MIDAS-ML, and LSTM.
+
+pandas==2.3.3
+numpy==2.4.0
+scikit-learn==1.8.0
+scipy==1.16.3
+statsmodels==0.14.6
+matplotlib==3.10.8
+openpyxl==3.1.5

@@ -1,0 +1,224 @@
+==============================================================================
+VARIABLE RANKINGS — RF Permutation Importance
+==============================================================================
+Source    : feature_selection_ensemble.xlsx / RF_perm_imp
+Method    : Random Forest (500 trees, permutation importance, n_repeats=10)
+Window    : 1959-01 to 2007-12 (pre-GFC training)
+Total RF  : 35 vars ranked (top-35 stored, rest below threshold)
+Total imp : 0.5958
+
+------------------------------------------------------------------------------
+CUMULATIVE IMPORTANCE CUTOFFS
+------------------------------------------------------------------------------
+  Threshold    Vars needed    Cumulative %
+  ---------    -----------    ------------
+    50%         1              62.5%
+    60%         1              62.5%
+    70%         2              91.2%
+    80%         2              91.2%
+    90%         2              91.2%
+    95%         4              95.5%
+    99%         22             99.1%
+
+------------------------------------------------------------------------------
+TOP-35 RF PERMUTATION IMPORTANCE (ranked)
+------------------------------------------------------------------------------
+  Rank  Feature                         Importance     Cum %
+  ----  ------------------------------  ----------     -----
+     1  outbs                           0.372145     62.5% <-- 60% cumulative threshold
+  --------------------------------------------------
+     2  outnfb                          0.171093     91.2% <-- 90% cumulative threshold
+  --------------------------------------------------
+     3  gpdic1                          0.021344     94.8%
+     4  ophpbs                          0.004523     95.5% <-- 95% cumulative threshold
+  --------------------------------------------------
+     5  fpix                            0.002478     95.9%
+     6  unratestx                       0.002262     96.3%
+     7  ophnfb                          0.002033     96.7%
+     8  dmanemp                         0.001592     96.9%
+     9  indpro                          0.001498     97.2%
+    10  ulcbs                           0.001473     97.4%
+    11  ulcnfb                          0.001372     97.7%
+    12  manemp                          0.001242     97.9%
+    13  hwiuratiox                      0.001125     98.1%
+    14  usgood                          0.001022     98.2%
+    15  pcecc96                         0.000778     98.4%
+    16  ipmat                           0.000708     98.5%
+    17  payems                          0.000682     98.6%
+    18  ipmansics                       0.000676     98.7%
+    19  cfnai                           0.000662     98.8%
+    20  hwix                            0.000573     98.9%
+    21  hoanbs                          0.000523     99.0%
+    22  pcdgx                           0.000510     99.1% <-- 99% cumulative threshold
+  --------------------------------------------------
+    23  awhman                          0.000507     99.2%
+    24  lns14000025                     0.000502     99.3%
+    25  rsafsx                          0.000474     99.3%
+    26  ipdmat                          0.000459     99.4%
+    27  ipfinal                         0.000429     99.5%
+    28  lns13023621                     0.000422     99.6%
+    29  uspriv                          0.000420     99.6%
+    30  tcu                             0.000402     99.7%
+    31  uscons                          0.000398     99.8%
+    32  cumfns                          0.000391     99.8%
+    33  cmrmtsplx                       0.000365     99.9%
+    34  ipfpnss                         0.000362     99.9%
+    35  dpic96                          0.000324    100.0%
+
+------------------------------------------------------------------------------
+UNION SET VARIABLES BELOW RF TOP-35
+(importance < 0.0003241 — the minimum in top-35)
+------------------------------------------------------------------------------
+These are in the Union set (selected by Lasso or EN but not RF).
+Count: 30 vars
+
+  a014re1q156nbea                  L#22 E#21 S61%
+  acogno                           L#18 E#20 S60%
+  ahetpix                          L#30 E#34
+  amdmuox                          L#13 E#12 S61%
+  andenox                          L#8 E#7 S87%
+  awotman                          L#28 E#28
+  busloans                         L#11 E#10 S84%
+  ce16ov                           L#29 E#29
+  ces1021000001                    L#15 E#14 S70%
+  ces2000000008                    L#12 E#11 S88%
+  ces9091000001                    L#14 E#13 S57%
+  ces9092000001                    L#31 E#32 S58%
+  compapff                         L#6 E#6 S72%
+  cusr0000sas                      L#26 E#25 S54%
+  ddurrg3m086sbea                  L#19 E#16 S61%
+  dhlcrg3q086sbea                  L#34 E#35
+  expgsc1                          L#35
+  gcec1                            L#2 E#3 S99%
+  houstne                          L#3 E#4 S88%
+  housts                           L#10 E#9 S64%
+  hwiuratio                        L#5 E#5 S79%
+  ipdcongd                         L#33 E#31 S37%
+  m2sl                             L#24 E#22 S38%
+  mortg10yrx                       L#9 E#8 S61%
+  nonrevsl                         L#20 E#19 S57%
+  permitw                          L#23 E#26 S48%
+  slcex                            L#25 E#23 S52%
+  tlbsnncbbdix                     L#32 E#33 S64%
+  uemp27ov                         L#21 E#24
+  usserv                           L#17 E#17 S62%
+
+==============================================================================
+CATEGORY ALLOCATION RECOMMENDATIONS
+==============================================================================
+
+Category 1 — Univariate (ARMA):  1 var
+  gdpc1 (target only)
+
+Category 2 — Unpenalized (VAR):  4 vars + 3 COVID = 7 total
+  Triple intersection (Lasso + Stab + RF):
+    hwiuratiox           L#27  S50% RF#13  imp=0.001125
+    outbs                L#1   S100% RF#1   imp=0.3721
+    outnfb               L#4   S86% RF#2   imp=0.1711
+    ulcnfb               L#7   S48% RF#11  imp=0.001372
+  + covid_2020q2, covid_2020q3, covid_2020q4
+
+Category 3 — Penalized (OLS, Lasso, Ridge, EN, BVAR, MIDAS, MIDASML):  26 vars + 3 COVID = 29 total
+  Rule: Stability >= 50% (Meinshausen-Buhlmann 2010)
+
+    a014re1q156nbea                L#22   S61%   RF: below top-35
+    acogno                         L#18   S60%   RF: below top-35
+    amdmuox                        L#13   S61%   RF: below top-35
+    andenox                        L#8   S87%   RF: below top-35
+    busloans                       L#11   S84%   RF: below top-35
+    ces1021000001                  L#15   S70%   RF: below top-35
+    ces2000000008                  L#12   S88%   RF: below top-35
+    ces9091000001                  L#14   S57%   RF: below top-35
+    ces9092000001                  L#31   S58%   RF: below top-35
+    compapff                       L#6   S72%   RF: below top-35
+    cusr0000sas                    L#26   S54%   RF: below top-35
+    ddurrg3m086sbea                L#19   S61%   RF: below top-35
+    gcec1                          L#2   S99%   RF: below top-35
+    houstne                        L#3   S88%   RF: below top-35
+    housts                         L#10   S64%   RF: below top-35
+    hwiuratio                      L#5   S79%   RF: below top-35
+    hwiuratiox                     L#27   S50%   RF#13 imp=0.001125
+    invest                         L#-   S56%   RF: below top-35
+    mortg10yrx                     L#9   S61%   RF: below top-35
+    nonrevsl                       L#20   S57%   RF: below top-35
+    outbs                          L#1   S100%   RF#1 imp=0.3721
+    outnfb                         L#4   S86%   RF#2 imp=0.1711
+    slcex                          L#25   S52%   RF: below top-35
+    tlbsnncbbdix                   L#32   S64%   RF: below top-35
+    ulcbs                          L#-   S51%   RF#10 imp=0.001473
+    usserv                         L#17   S62%   RF: below top-35
+  + covid_2020q2, covid_2020q3, covid_2020q4
+
+Category 4 — ML + DFM (RF, XGB, GB, DT, MLP, LSTM, DeepVAR, DFM):  65 vars + 3 COVID = 68 total
+  Rule: Union (Lasso U EN U RF) — all variables flagged by >=1 method
+
+  Full Union set:
+    a014re1q156nbea                L#22 E#21
+    acogno                         L#18 E#20
+    ahetpix                        L#30 E#34
+    amdmuox                        L#13 E#12
+    andenox                        L#8 E#7
+    awhman                         RF#23 imp=0.000507
+    awotman                        L#28 E#28
+    busloans                       L#11 E#10
+    ce16ov                         L#29 E#29
+    ces1021000001                  L#15 E#14
+    ces2000000008                  L#12 E#11
+    ces9091000001                  L#14 E#13
+    ces9092000001                  L#31 E#32
+    cfnai                          RF#19 imp=0.0006622
+    cmrmtsplx                      RF#33 imp=0.0003646
+    compapff                       L#6 E#6
+    cumfns                         RF#32 imp=0.0003913
+    cusr0000sas                    L#26 E#25
+    ddurrg3m086sbea                L#19 E#16
+    dhlcrg3q086sbea                L#34 E#35
+    dmanemp                        RF#8 imp=0.001592
+    dpic96                         RF#35 imp=0.0003241
+    expgsc1                        L#35 
+    fpix                           RF#5 imp=0.002478
+    gcec1                          L#2 E#3
+    gpdic1                         RF#3 imp=0.02134
+    hoanbs                         RF#21 imp=0.0005226
+    houstne                        L#3 E#4
+    housts                         L#10 E#9
+    hwiuratio                      L#5 E#5
+    hwiuratiox                     RF#13 imp=0.001125
+    hwix                           RF#20 imp=0.0005732
+    indpro                         RF#9 imp=0.001498
+    ipdcongd                       L#33 E#31
+    ipdmat                         RF#26 imp=0.0004591
+    ipfinal                        RF#27 imp=0.0004285
+    ipfpnss                        RF#34 imp=0.0003618
+    ipmansics                      RF#18 imp=0.0006759
+    ipmat                          RF#16 imp=0.0007076
+    lns13023621                    RF#28 imp=0.0004216
+    lns14000025                    RF#24 imp=0.0005025
+    m2sl                           L#24 E#22
+    manemp                         RF#12 imp=0.001242
+    mortg10yrx                     L#9 E#8
+    nonrevsl                       L#20 E#19
+    ophnfb                         RF#7 imp=0.002033
+    ophpbs                         RF#4 imp=0.004523
+    outbs                          RF#1 imp=0.3721
+    outnfb                         RF#2 imp=0.1711
+    payems                         RF#17 imp=0.0006821
+    pcdgx                          RF#22 imp=0.0005097
+    pcecc96                        RF#15 imp=0.0007783
+    permitw                        L#23 E#26
+    rsafsx                         RF#25 imp=0.000474
+    slcex                          L#25 E#23
+    tcu                            RF#30 imp=0.0004024
+    tlbsnncbbdix                   L#32 E#33
+    uemp27ov                       L#21 E#24
+    ulcbs                          RF#10 imp=0.001473
+    ulcnfb                         RF#11 imp=0.001372
+    unratestx                      RF#6 imp=0.002262
+    uscons                         RF#31 imp=0.0003985
+    usgood                         RF#14 imp=0.001022
+    uspriv                         RF#29 imp=0.0004202
+    usserv                         L#17 E#17
+  + covid_2020q2, covid_2020q3, covid_2020q4
+
+==============================================================================
+END OF RANKINGS

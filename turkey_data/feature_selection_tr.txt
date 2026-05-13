@@ -1,0 +1,92 @@
+Ensemble feature selection — TURKEY  (1995-2011 training window)
+======================================================================
+
+Lasso alpha=0.001233  (TimeSeriesSplit n=5, grid 1e-6..1)
+ElasticNet alpha=0.01322, l1_ratio=0.100
+RF best params: {'max_features': 0.33, 'min_samples_leaf': 3}, n_estimators=500, perm n_repeats=10
+Stability: 100 resamples, 75% subsample
+
+Pairwise overlaps (out of 20):
+  Lasso vs EN   : 11
+  Lasso vs RF   : 11  (low expected)
+  EN vs RF      : 10
+  Lasso vs Stab : 12  (high = stable)
+
+======================================================================
+Top 20 -- LASSO:
+    1. ipi_sa                               imp=0.0153
+    2. usd_try_avg                          imp=0.01118
+    3. unemp_rate                           imp=0.004573
+    4. reer                                 imp=0.004456
+    5. cpi_sa                               imp=0.004077
+    6. m3                                   imp=0.002726
+    7. total_prod                           imp=0.002569
+    8. altin_rezerv_var                     imp=0.001481
+    9. auto_prod                            imp=0.001072
+   10. maden_ciro_endeksi_sa                imp=0.0006339
+   11. empl_num                             imp=0.0005411
+   12. fin_acc                              imp=8.13e-05
+
+Top 20 -- ELASTICNET:
+    1. ipi_sa                               imp=0.01442
+    2. usd_try_avg                          imp=0.01047
+    3. unemp_rate                           imp=0.004601
+    4. reer                                 imp=0.004446
+    5. cpi_sa                               imp=0.003675
+    6. m3                                   imp=0.002585
+    7. total_prod                           imp=0.002513
+    8. altin_rezerv_var                     imp=0.001318
+    9. maden_ciro_endeksi_sa                imp=0.0008782
+   10. auto_prod                            imp=0.0007689
+   11. empl_num                             imp=0.0003939
+
+Top 20 -- RF perm-imp:
+    1. fin_acc                              imp=7.617e-05
+    2. ipi_sa                               imp=6.682e-05
+    3. reer                                 imp=3.668e-05
+    4. usd_try_avg                          imp=2.685e-05
+    5. altin_rezerv_var                     imp=1.914e-05
+    6. total_prod                           imp=1.42e-05
+    7. bist100                              imp=1.23e-05
+    8. unemp_num                            imp=1.072e-05
+    9. doviz_rezerv_var                     imp=8.878e-06
+   10. ppi                                  imp=8.712e-06
+   11. resmi_rezerv_var                     imp=8.169e-06
+   12. consu_i                              imp=6.754e-06
+   13. auto_prod                            imp=6.572e-06
+   14. unemp_rate                           imp=4.353e-06
+   15. empl_num                             imp=3.854e-06
+   16. tourist                              imp=3.654e-06
+   17. maden_ciro_endeksi_sa                imp=2.656e-06
+   18. cpi_sa                               imp=2.459e-06
+   19. deposit_i                            imp=1.54e-06
+   20. emp_rate                             imp=1.247e-06
+
+Top 20 -- STABILITY:
+    1. ipi_sa                               imp=1
+    2. cpi_sa                               imp=0.99
+    3. reer                                 imp=0.96
+    4. usd_try_avg                          imp=0.92
+    5. m3                                   imp=0.88
+    6. total_prod                           imp=0.85
+    7. altin_rezerv_var                     imp=0.8
+    8. maden_ciro_endeksi_sa                imp=0.76
+    9. unemp_rate                           imp=0.74
+   10. bist100                              imp=0.68
+   11. fin_acc                              imp=0.68
+   12. empl_num                             imp=0.51
+   13. ppi                                  imp=0.51
+   14. auto_prod                            imp=0.45
+   15. deposit_i                            imp=0.45
+   16. consu_i                              imp=0.44
+   17. resmi_rezerv_var                     imp=0.37
+   18. tourist                              imp=0.37
+   19. unemp_num                            imp=0.19
+   20. doviz_rezerv_var                     imp=0.16
+
+======================================================================
+cat2 (4-var small-model set): "ipi_sa", "usd_try_avg", "cpi_sa", "fin_acc"
+
+UNION  (Lasso | EN | RF): "altin_rezerv_var", "auto_prod", "bist100", "consu_i", "cpi_sa", "deposit_i", "doviz_rezerv_var", "emp_rate", "empl_num", "fin_acc", "ipi_sa", "m3", "maden_ciro_endeksi_sa", "ppi", "reer", "resmi_rezerv_var", "total_prod", "tourist", "unemp_num", "unemp_rate", "usd_try_avg"
+
+INTER  (Lasso & EN & RF): "altin_rezerv_var", "auto_prod", "cpi_sa", "empl_num", "ipi_sa", "maden_ciro_endeksi_sa", "reer", "total_prod", "unemp_rate", "usd_try_avg"

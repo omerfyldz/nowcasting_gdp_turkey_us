@@ -1,0 +1,8 @@
+﻿Rscript.exe : Error in library(tidyverse) : there is no package called 'tidyverse'
+At line:1 char:50
++ ... midas_tr.R; & "C:\Program Files\R\R-4.6.0\bin\Rscript.exe" model_mida ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error in librar...led 'tidyverse':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Çalıştırma durduruldu

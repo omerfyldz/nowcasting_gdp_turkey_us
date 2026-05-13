@@ -1,0 +1,13 @@
+.DS_Store
+.DS_Store?
+.ipynb_checkpoints
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.Rhistory
+.RData
+.Rproj.user/
+.venv/
+venv/
+env/

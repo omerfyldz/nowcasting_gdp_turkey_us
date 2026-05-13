@@ -1,0 +1,59 @@
+series,name,freq,block_g,block_s,block_r,block_l,months_lag
+1week-repo,1week-repo,m,1,0,0,0,1
+bist100,BIST100,m,1,0,0,0,0
+ipi_sa,Industrial Production Index,m,1,0,1,0,1
+auto_prod,Total Automobile Production,m,1,0,1,0,1
+total_prod,Total Vehicle Production,m,1,0,1,0,1
+bus_conf,Real Sector Confidence Indicator Seasonally Adjusted (Monthly),m,1,1,0,0,0
+cons_conf,Seasonally Unadjusted Consumer Confidence Index and Indices of Consumer Tendency Survey Questions (Monthly),m,1,1,0,0,0
+cpi_sa,Consumer Price Index (2025=100) (Monthly) Seasonally Adjusted,m,1,0,1,0,0
+cur_sa,Capacity Utilization Rate of Manufacturing Industry - Seasonally Adjusted (Monthly) (Percentage),m,1,0,1,0,0
+elec_prod,Turkey Electricity Energy Production,m,1,0,1,0,0
+elec_cons,Turkey Electricity Energy Consumption,m,1,0,1,0,0
+usd_try_avg,USD/TRY Average Rate per Month,m,1,0,0,0,1
+ppi,Domestic Producer Price Index (Monthly) ((2003=100)),m,1,0,1,0,0
+exp_vol_i,Foreign Trade Export Volume Index by Classification of BEC (2015=100) (Monthly) (Quantity index),m,1,0,1,0,1
+imp_vol_i,Foreign Trade Import Volume Index by Classification of BEC (2015=100) (Monthly) (Quantity index),m,1,0,1,0,1
+retail_sales_sa,"Retail Sales Volume Index (Constant Prices, 2015=100) – TotalSA",m,1,0,1,0,1
+retail_sales_nsa,"Retail Sales Volume Index (Constant Prices, 2015=100) – Total NSA",m,1,0,1,0,1
+house_sales_sa,Turkiye_House_Total sales_Seasonally Adjusted-Level,m,1,0,1,0,1
+commprop_sales_sa,Turkiye_Commercial Property_Total sales_Seasonally Adjusted-Level,m,1,0,1,0,1
+total_prop_sales,Total Property Sales,m,1,0,1,0,1
+loans,LOANS,m,1,0,0,0,1
+fin_acc,"Financial Account (Balance of Payments, Analytical Presentation)",m,1,0,0,0,1
+empl_num,Number of Employed,m,1,0,0,1,1
+unemp_num,unemp_num,m,1,0,1,1,1
+emp_rate,Employment Rate,m,1,0,0,1,1
+unemp_rate,Unemployment Rate,m,1,0,0,1,1
+real_gdp_i,REAL_GDP_I,q,1,0,1,0,1
+card_trans,Weekly Debit and Credit Card Number of Transactions (Total),m,1,0,1,0,0
+card_pmt_i,General Card Payments Index (Nominal)-Level,m,1,0,1,0,1
+card_pmt_i_r,General Card Payments Index (Real)-Level,m,1,0,1,0,1
+hh_pmt,Household Card Payments Index (Nominal)-Level,m,1,0,1,0,1
+hh_pmt_r,Household Card Payments Index (Real)-Level,m,1,0,1,0,1
+reer,Reel Efektif Doviz Kuru TUFE bazli,m,1,0,0,0,0
+ngdprsaxdctrq,Real Gross Domestic Product for Turkey,q,1,0,1,0,2
+non_fin_firms_credits,Loans to Non-Financial Corporations,m,1,0,0,0,1
+household_credits,household_credits,m,1,0,0,0,1
+tax,Central Government Tax Revenues,m,1,0,1,0,0
+exp_ind_auto,"Export Unit Value Index – Passenger Cars (BEC Classification, 2015=100)",m,1,0,1,0,1
+exp_ind_dg,"Export Unit Value Index – Durable Goods (BEC Classification, 2015=100)",m,1,0,1,0,1
+imp_ind_auto,"Import Unit Value Index – Passenger Cars (BEC Classification, 2015=100)",m,1,0,1,0,1
+imp_ind_dg,"Import Unit Value Index – Durable Goods (BEC Classification, 2015=100)",m,1,0,1,0,1
+maden_ciro_endeksi_sa,"Ciro Endeksi – Madencilik ve Tas Ocakciligi, Imalat [B_C]",m,1,0,1,0,1
+sanayi_ins_tic_ciro_sa,"Ciro Endeksi – Sanayi, Insaat, Ticaret ve Hizmetler [B-C_F-N_X_K]",m,1,0,1,0,1
+is_ekon_ciro_sa,Ciro Endeksi - Is Ekonomisi Hizmetleri,m,1,0,1,0,1
+tourist,Number of Tourist Arrivals,m,1,0,1,0,1
+auto_exp_vol_i,"Foreign Trade Export Quantity Index – Automobiles (BEC, 2010=100) (Monthly)",m,1,0,1,0,1
+dg_exp_vol_i,"Foreign Trade Export Quantity Index – Durable Consumption Goods (BEC, 2010=100) (Monthly)",m,1,0,1,0,1
+auto_imp_vol_i,"Foreign Trade Import Quantity Index – Automobiles (BEC, 2010=100) (Monthly)",m,1,0,1,0,1
+dg_imp_vol_i,"Foreign Trade Import Quantity Index – Durable Consumption Goods (BEC, 2010=100) (Monthly)",m,1,0,1,0,1
+resmi_rezerv_var,Resmi Rezerv Varliklari (Toplam),m,1,0,0,0,0
+doviz_rezerv_var,Doviz Varliklari,m,1,0,0,0,0
+altin_rezerv_var,Altin Varliklari,m,1,0,0,0,0
+m3,"Broad Money (M3, 2005/12 sonrasi)",m,1,0,0,0,1
+consu_i,"Tuketici Kredisi Faiz Orani (Ihtiyac+Tasit+Konut, TL, Akim, %)",m,1,1,0,0,0
+deposit_i,"TL Mevduat Faiz Orani (Toplam, Akim, %)",m,1,1,0,0,0
+covid_2020q2,COVID dummy 2020-Q2,m,0,0,0,0,0
+covid_2020q3,COVID dummy 2020-Q3,m,0,0,0,0,0
+covid_2020q4,COVID dummy 2020-Q4,m,0,0,0,0,0

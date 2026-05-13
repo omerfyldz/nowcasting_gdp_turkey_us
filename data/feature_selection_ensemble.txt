@@ -1,0 +1,183 @@
+Ensemble feature selection (RIGOROUS) -- 1959-2007 training window
+======================================================================
+
+Lasso alpha=2.477e-05 (TimeSeriesSplit n=5, alpha grid 1e-6..1)
+ElasticNet alpha=0.0001, l1_ratio=0.250 (grid: 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0)
+RandomForest best params: {'max_features': 0.33, 'min_samples_leaf': 1}, n_estimators=500, perm-imp n_repeats=10
+Stability selection: 100 resamples, 75% subsample, alpha=Lasso optimum
+
+Pairwise overlaps (out of 35):
+  Lasso vs EN     : 34
+  Lasso vs RF     : 5  (low expected: linear vs non-linear)
+  EN vs RF        : 6
+  Lasso vs Stab   : 28  (high = picks are stable)
+
+======================================================================
+Top 35 -- LASSO (rank: feature, importance):
+    1. outbs                             imp=0.007747
+    2. gcec1                             imp=0.0002155
+    3. houstne                           imp=0.0001546
+    4. outnfb                            imp=0.0001345
+    5. hwiuratio                         imp=0.0001251
+    6. compapff                          imp=0.0001248
+    7. ulcnfb                            imp=0.0001231
+    8. andenox                           imp=0.0001186
+    9. mortg10yrx                        imp=0.0001151
+   10. housts                            imp=0.0001069
+   11. busloans                          imp=0.0001049
+   12. ces2000000008                     imp=9.78e-05
+   13. amdmuox                           imp=8.575e-05
+   14. ces9091000001                     imp=8.345e-05
+   15. ces1021000001                     imp=7.973e-05
+   16. manemp                            imp=7.698e-05
+   17. usserv                            imp=7.053e-05
+   18. acogno                            imp=7.014e-05
+   19. ddurrg3m086sbea                   imp=6.94e-05
+   20. nonrevsl                          imp=6.694e-05
+   21. uemp27ov                          imp=6.502e-05
+   22. a014re1q156nbea                   imp=6.492e-05
+   23. permitw                           imp=6.369e-05
+   24. m2sl                              imp=6.34e-05
+   25. slcex                             imp=6.296e-05
+   26. cusr0000sas                       imp=6.267e-05
+   27. hwiuratiox                        imp=5.444e-05
+   28. awotman                           imp=5.332e-05
+   29. ce16ov                            imp=5.252e-05
+   30. ahetpix                           imp=4.857e-05
+   31. ces9092000001                     imp=4.69e-05
+   32. tlbsnncbbdix                      imp=4.519e-05
+   33. ipdcongd                          imp=4.455e-05
+   34. dhlcrg3q086sbea                   imp=4.427e-05
+   35. expgsc1                           imp=4.4e-05
+
+Top 35 -- ELASTICNET (rank: feature, importance):
+    1. outbs                             imp=0.007619
+    2. outnfb                            imp=0.0002578
+    3. gcec1                             imp=0.0002175
+    4. houstne                           imp=0.0001539
+    5. hwiuratio                         imp=0.000125
+    6. compapff                          imp=0.0001219
+    7. andenox                           imp=0.0001182
+    8. mortg10yrx                        imp=0.0001128
+    9. housts                            imp=0.0001098
+   10. busloans                          imp=0.0001057
+   11. ces2000000008                     imp=9.824e-05
+   12. amdmuox                           imp=8.775e-05
+   13. ces9091000001                     imp=7.948e-05
+   14. ces1021000001                     imp=7.881e-05
+   15. ulcbs                             imp=7.437e-05
+   16. ddurrg3m086sbea                   imp=7.22e-05
+   17. usserv                            imp=7.126e-05
+   18. manemp                            imp=7.112e-05
+   19. nonrevsl                          imp=6.942e-05
+   20. acogno                            imp=6.89e-05
+   21. a014re1q156nbea                   imp=6.579e-05
+   22. m2sl                              imp=6.513e-05
+   23. slcex                             imp=6.463e-05
+   24. uemp27ov                          imp=6.438e-05
+   25. cusr0000sas                       imp=6.292e-05
+   26. permitw                           imp=6.264e-05
+   27. hwiuratiox                        imp=5.519e-05
+   28. awotman                           imp=5.303e-05
+   29. ce16ov                            imp=5.06e-05
+   30. ulcnfb                            imp=4.893e-05
+   31. ipdcongd                          imp=4.714e-05
+   32. ces9092000001                     imp=4.538e-05
+   33. tlbsnncbbdix                      imp=4.447e-05
+   34. ahetpix                           imp=4.409e-05
+   35. dhlcrg3q086sbea                   imp=4.406e-05
+
+Top 35 -- RANDOM FOREST perm-imp (rank: feature, importance):
+    1. outbs                             imp=2.514e-05
+    2. outnfb                            imp=1.235e-05
+    3. gpdic1                            imp=1.436e-06
+    4. ophpbs                            imp=3.139e-07
+    5. unratestx                         imp=1.865e-07
+    6. fpix                              imp=1.57e-07
+    7. ophnfb                            imp=1.507e-07
+    8. indpro                            imp=1.172e-07
+    9. ulcbs                             imp=1.153e-07
+   10. dmanemp                           imp=1.078e-07
+   11. ulcnfb                            imp=1.047e-07
+   12. manemp                            imp=8.916e-08
+   13. hwiuratiox                        imp=8.903e-08
+   14. usgood                            imp=6.759e-08
+   15. ipmansics                         imp=6.212e-08
+   16. ipmat                             imp=6.077e-08
+   17. pcecc96                           imp=5.45e-08
+   18. cfnai                             imp=5.271e-08
+   19. payems                            imp=4.754e-08
+   20. hwix                              imp=4.323e-08
+   21. hoanbs                            imp=4.053e-08
+   22. lns14000025                       imp=3.944e-08
+   23. awhman                            imp=3.878e-08
+   24. pcdgx                             imp=3.793e-08
+   25. ipdmat                            imp=3.54e-08
+   26. uspriv                            imp=3.332e-08
+   27. rsafsx                            imp=3.292e-08
+   28. lns13023621                       imp=3.219e-08
+   29. tcu                               imp=3.11e-08
+   30. cumfns                            imp=3.023e-08
+   31. ipfinal                           imp=3.012e-08
+   32. ipfpnss                           imp=2.74e-08
+   33. cmrmtsplx                         imp=2.685e-08
+   34. uscons                            imp=2.64e-08
+   35. isratiox                          imp=2.467e-08
+
+Top 35 -- LASSO STABILITY SELECTION (rank: feature, freq):
+    1. outbs                             imp=1
+    2. gcec1                             imp=0.99
+    3. houstne                           imp=0.88
+    4. ces2000000008                     imp=0.88
+    5. andenox                           imp=0.87
+    6. outnfb                            imp=0.86
+    7. busloans                          imp=0.84
+    8. hwiuratio                         imp=0.79
+    9. compapff                          imp=0.72
+   10. ces1021000001                     imp=0.7
+   11. housts                            imp=0.64
+   12. tlbsnncbbdix                      imp=0.64
+   13. usserv                            imp=0.62
+   14. amdmuox                           imp=0.61
+   15. ddurrg3m086sbea                   imp=0.61
+   16. a014re1q156nbea                   imp=0.61
+   17. mortg10yrx                        imp=0.61
+   18. acogno                            imp=0.6
+   19. ces9092000001                     imp=0.58
+   20. nonrevsl                          imp=0.57
+   21. ces9091000001                     imp=0.57
+   22. invest                            imp=0.56
+   23. cusr0000sas                       imp=0.54
+   24. slcex                             imp=0.52
+   25. ulcbs                             imp=0.51
+   26. hwiuratiox                        imp=0.5
+   27. permitw                           imp=0.48
+   28. ulcnfb                            imp=0.48
+   29. usgovt                            imp=0.47
+   30. clf16ov                           imp=0.46
+   31. uemplt5                           imp=0.43
+   32. m2sl                              imp=0.38
+   33. ipdcongd                          imp=0.37
+   34. unrate                            imp=0.35
+   35. realln                            imp=0.34
+
+======================================================================
+Plain lists for copy-paste into notebooks:
+
+Lasso top-35:
+"outbs", "gcec1", "houstne", "outnfb", "hwiuratio", "compapff", "ulcnfb", "andenox", "mortg10yrx", "housts", "busloans", "ces2000000008", "amdmuox", "ces9091000001", "ces1021000001", "manemp", "usserv", "acogno", "ddurrg3m086sbea", "nonrevsl", "uemp27ov", "a014re1q156nbea", "permitw", "m2sl", "slcex", "cusr0000sas", "hwiuratiox", "awotman", "ce16ov", "ahetpix", "ces9092000001", "tlbsnncbbdix", "ipdcongd", "dhlcrg3q086sbea", "expgsc1"
+
+ElasticNet top-35:
+"outbs", "outnfb", "gcec1", "houstne", "hwiuratio", "compapff", "andenox", "mortg10yrx", "housts", "busloans", "ces2000000008", "amdmuox", "ces9091000001", "ces1021000001", "ulcbs", "ddurrg3m086sbea", "usserv", "manemp", "nonrevsl", "acogno", "a014re1q156nbea", "m2sl", "slcex", "uemp27ov", "cusr0000sas", "permitw", "hwiuratiox", "awotman", "ce16ov", "ulcnfb", "ipdcongd", "ces9092000001", "tlbsnncbbdix", "ahetpix", "dhlcrg3q086sbea"
+
+RF perm-imp top-35:
+"outbs", "outnfb", "gpdic1", "ophpbs", "unratestx", "fpix", "ophnfb", "indpro", "ulcbs", "dmanemp", "ulcnfb", "manemp", "hwiuratiox", "usgood", "ipmansics", "ipmat", "pcecc96", "cfnai", "payems", "hwix", "hoanbs", "lns14000025", "awhman", "pcdgx", "ipdmat", "uspriv", "rsafsx", "lns13023621", "tcu", "cumfns", "ipfinal", "ipfpnss", "cmrmtsplx", "uscons", "isratiox"
+
+Lasso stable top-35:
+"outbs", "gcec1", "houstne", "ces2000000008", "andenox", "outnfb", "busloans", "hwiuratio", "compapff", "ces1021000001", "housts", "tlbsnncbbdix", "usserv", "amdmuox", "ddurrg3m086sbea", "a014re1q156nbea", "mortg10yrx", "acogno", "ces9092000001", "nonrevsl", "ces9091000001", "invest", "cusr0000sas", "slcex", "ulcbs", "hwiuratiox", "permitw", "ulcnfb", "usgovt", "clf16ov", "uemplt5", "m2sl", "ipdcongd", "unrate", "realln"
+
+UNION (Lasso U EN U RF -- robust set, use for ML notebooks):
+"a014re1q156nbea", "acogno", "ahetpix", "amdmuox", "andenox", "awhman", "awotman", "busloans", "ce16ov", "ces1021000001", "ces2000000008", "ces9091000001", "ces9092000001", "cfnai", "cmrmtsplx", "compapff", "cumfns", "cusr0000sas", "ddurrg3m086sbea", "dhlcrg3q086sbea", "dmanemp", "expgsc1", "fpix", "gcec1", "gpdic1", "hoanbs", "houstne", "housts", "hwiuratio", "hwiuratiox", "hwix", "indpro", "ipdcongd", "ipdmat", "ipfinal", "ipfpnss", "ipmansics", "ipmat", "isratiox", "lns13023621", "lns14000025", "m2sl", "manemp", "mortg10yrx", "nonrevsl", "ophnfb", "ophpbs", "outbs", "outnfb", "payems", "pcdgx", "pcecc96", "permitw", "rsafsx", "slcex", "tcu", "tlbsnncbbdix", "uemp27ov", "ulcbs", "ulcnfb", "unratestx", "uscons", "usgood", "uspriv", "usserv"
+
+INTERSECTION (Lasso n EN n RF -- core set):
+"hwiuratiox", "manemp", "outbs", "outnfb", "ulcnfb"
