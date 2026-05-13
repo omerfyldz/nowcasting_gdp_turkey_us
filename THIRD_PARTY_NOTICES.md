@@ -1,3 +1,13 @@
+# Third-Party Notices
+
+This repository includes code adapted from Daniel Hopp's MIT-licensed nowcasting benchmark:
+
+Hopp, D. (2022). *Benchmarking econometric and machine learning methodologies in nowcasting*. UNCTAD Research Paper No. 83.
+
+The original MIT notice is preserved below for the adapted portions.
+
+## Daniel Hopp Nowcasting Benchmark
+
 MIT License
 
 Copyright (c) 2022 Daniel Hopp

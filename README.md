@@ -133,6 +133,6 @@ The original `methodologies/` reference notebook folder is not included in this 
 C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
 ```
 
-## License
+## License and Notices
 
-This repository retains the original MIT license notice because the project builds on code adapted from Daniel Hopp's MIT-licensed nowcasting benchmark. See `LICENSE`.
+No repository-wide license is declared in this cleanup. Third-party license notices for adapted code are preserved in `THIRD_PARTY_NOTICES.md`.
