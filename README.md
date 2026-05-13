@@ -107,6 +107,7 @@ Interpretation:
 ## Documentation
 
 - `docs/audit_report.md`: end-to-end audit and literature alignment.
+- `docs/literature_alignment_review.md`: project interpretation and deviations in light of the literature-review PDFs.
 - `docs/status.md`: current project state and known deviations.
 - `docs/repository_layout.md`: repository organization.
 - `docs/github_push_checklist.md`: validation and push checklist.
