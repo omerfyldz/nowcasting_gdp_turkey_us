@@ -146,7 +146,7 @@ Original 24 Bok variables vs our 296:
 
 ### helpers.py
 
-Functions byte-for-byte from original Hopp (2023):
+Functions originally inspired by the Hopp benchmark helper structure:
 - `gen_lagged_data(metadata, data, last_date, lag)` — ragged-edge mask
 - `flatten_data(data, target_variable, n_lags)` — creates lagged copies V, V_1, V_2, V_3
 - `mean_fill_dataset(training, test)` — fill NaN with training means
@@ -658,7 +658,7 @@ All 17 notebooks present. 13 Python, 4 R. All pass structural checks (no empty c
 
 ### Root Directory
 
-Clean: `LICENSE`, `README.md`, `STATUS.md`, `predictions/`, `data/`, `model_notebooks/`, `methodologies/` (original, read-only), `turkey_data/` (untouched).
+Clean at that stage: `README.md`, `STATUS.md`, `predictions/`, `data/`, `model_notebooks/`, `methodologies/` (original reference, read-only), `turkey_data/` (untouched).
 
 ---
 

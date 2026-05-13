@@ -266,7 +266,7 @@ HP tuning uses `TimeSeriesSplit(5)` on train+val (1995-2017). NEVER random KFold
 1. Did NOT call `mean_fill_dataset` before flattening (unlike US pipeline)
 2. Used the old `data.loc[~pd.isna(data[target]),:]` NaN-target-drop pattern (already fixed in `helpers.py`)
 
-These caused effective training to collapse from 67 to 23 quarters, producing wrong Cat2. **Fixed**: imports `helpers.flatten_data` and `helpers.mean_fill_dataset` directly — byte-for-byte identical to US pipeline.
+These caused effective training to collapse from 67 to 23 quarters, producing wrong Cat2. **Fixed**: imports `helpers.flatten_data` and `helpers.mean_fill_dataset` directly from the shared US pipeline helpers.
 
 **Methodology**:
 - **Coverage filter**: Variables with >=34% coverage in 1995-2011 training → Cat3 (22 vars)
@@ -718,7 +718,7 @@ All Turkey pipeline scripts follow the same architecture as their US counterpart
 
 | Function | US | Turkey | Identical? |
 |----------|-----|--------|------------|
-| `apply_tcode` | `data/build_final_tf_data.py` | `turkey_data/build_final_tf_data_tr.py` | YES — byte-for-byte |
+| `apply_tcode` | `data/build_final_tf_data.py` | `turkey_data/build_final_tf_data_tr.py` | YES — same project logic |
 | `gen_lagged_data` | `data/helpers.py` | Imported from US `helpers.py` | YES — same function |
 | `flatten_data` | `data/helpers.py` | Imported from US `helpers.py` | YES — same function |
 | `mean_fill_dataset` | `data/helpers.py` | Imported from US `helpers.py` | YES — same function |

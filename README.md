@@ -117,7 +117,7 @@ Interpretation:
 
 ## Original Benchmark Reference
 
-This project builds from the structure and model lineup of Hopp's open-source nowcasting benchmark:
+This project was inspired by the structure and model lineup of Hopp's open-source nowcasting benchmark:
 
 Hopp, D. (2022). *Benchmarking econometric and machine learning methodologies in nowcasting*. UNCTAD Research Paper No. 83.
 
@@ -132,7 +132,3 @@ The original `methodologies/` reference notebook folder is not included in this 
 ```text
 C:\Users\asus\Desktop\methodologies_nowcasting_original_reference
 ```
-
-## License and Notices
-
-No repository-wide license is declared in this cleanup. Third-party license notices for adapted code are preserved in `THIRD_PARTY_NOTICES.md`.

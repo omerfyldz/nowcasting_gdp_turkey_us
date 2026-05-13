@@ -96,8 +96,7 @@ def load_data():
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Below: functions byte-for-byte identical to the original Hopp (2023) repo.
-# DO NOT MODIFY without cross-checking against the original model_ols.ipynb.
+# Below: shared ragged-edge and supervised-learning helpers used across models.
 # ──────────────────────────────────────────────────────────────────────────────
 
 
