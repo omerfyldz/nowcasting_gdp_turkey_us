@@ -130,6 +130,8 @@ Interpretation:
 - `docs/audit_report.md`: end-to-end audit and literature alignment.
 - `docs/results_analysis.md`: period-by-period, vintage-by-vintage interpretation
   of the final empirical results.
+- `docs/leakage_audit.md`: data-leakage audit, pseudo-real-time limitations,
+  and CV preprocessing fix notes.
 - `docs/literature_alignment_review.md`: project interpretation and deviations in light of the literature-review PDFs.
 - `docs/status.md`: current project state and known deviations.
 - `docs/repository_layout.md`: repository organization.

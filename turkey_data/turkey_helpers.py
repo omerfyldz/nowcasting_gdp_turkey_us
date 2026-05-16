@@ -14,8 +14,10 @@ Core functions (imported, never redefined):
 #   cat1 = ARMA (target only: ngdprsaxdctrq)
 #   cat2 = VAR/OLS (4 vars: ipi_sa, usd_try_avg, cpi_sa, fin_acc + COVID = 7)
 #   cat3 = most models (22 vars at >=34% training coverage + COVID = 25)
-#   "dfm" = DFM only (cat3 22 vars + tier_c 32 vars = 54, no COVID in list —
-#            DFM R notebook appends COVID separately)
+#   "dfm" = diagnostic full DFM candidate set (cat3 22 vars + tier_c 32 vars).
+#            Final reported Turkey DFM uses validation-selected Cat2 because
+#            the sparse full panel failed inside nowcastDFM.
+
 
 import sys, os, json
 import numpy as np
@@ -56,7 +58,7 @@ def get_features(category="cat3", with_covid=True):
         cat1 = ARMA (target only: ngdprsaxdctrq)
         cat2 = VAR/OLS (4 vars from RF+Stability ensemble)
         cat3 = most models (22 vars at >=34% training coverage)
-        dfm  = DFM (cat3 22 vars + tier_c 32 vars = 54 vars total)
+        dfm  = diagnostic full DFM candidate set, not the final reported DFM.
 
     with_covid : bool
         If True, append covid_2020q2/q3/q4 to the returned list.
@@ -77,11 +79,11 @@ def get_features(category="cat3", with_covid=True):
 
 def get_dfm_features(with_covid=True):
     """
-    Return the full 54-variable list for the Turkey DFM notebook.
+    Return the full 54-variable diagnostic candidate list for Turkey DFM.
 
-    DFM uses ALL variables: cat3 (22) + tier_c_dfm_only (32) = 54.
-    The Kalman filter handles ragged edges / missing data internally,
-    so Tier C variables (short history, <34% training coverage) are safe to include.
+    The final reported DFM output does not use this full list. A validation
+    pass compared feasible DFM panels, selected Cat2 on 2012-2017 validation
+    RMSFE, and froze Cat2 for the 2018-2025 test outputs.
 
     with_covid : bool
         If True, append the 3 COVID dummies (total = 57 columns passed to DFM).

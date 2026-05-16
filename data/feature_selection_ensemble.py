@@ -36,6 +36,7 @@ from sklearn.linear_model import LassoCV, ElasticNetCV, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
+from sklearn.pipeline import Pipeline
 
 BASE = "C:/Users/asus/Desktop/nowcasting_benchmark-main/nowcasting_benchmark-main/data"
 SEED = 42
@@ -153,10 +154,6 @@ X = X.drop(covid_cols, axis=1)
 
 print(f"X shape: {X.shape} | y shape: {y.shape}")
 
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-X_df = pd.DataFrame(X_scaled, columns=X.columns)
-
 # Common time-aware CV
 tscv = TimeSeriesSplit(n_splits=5)
 
@@ -165,8 +162,14 @@ tscv = TimeSeriesSplit(n_splits=5)
 # -----------------------------------------------------------------------------
 print("\n[1/4] Fitting LassoCV with TimeSeriesSplit...")
 alpha_path = np.logspace(-6, 0, 100)
-lasso = LassoCV(alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1)
-lasso.fit(X_scaled, y)
+lasso_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        ("model", LassoCV(alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1)),
+    ]
+)
+lasso_pipe.fit(X.values, y)
+lasso = lasso_pipe.named_steps["model"]
 imp_lasso = aggregate_importance(lasso.coef_, X.columns)
 top_lasso = topk(imp_lasso)
 top_lasso_ranked = topk_ranked(imp_lasso)
@@ -176,11 +179,20 @@ print(f"      Lasso alpha={lasso.alpha_:.4g}, top-35 head: {top_lasso[:5]}")
 # 2. ElasticNetCV (TimeSeriesSplit, widened l1_ratio grid)
 # -----------------------------------------------------------------------------
 print("\n[2/4] Fitting ElasticNetCV with widened l1_ratio grid...")
-en = ElasticNetCV(
-    l1_ratio=[0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0],
-    alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1,
+en_pipe = Pipeline(
+    [
+        ("scaler", StandardScaler()),
+        (
+            "model",
+            ElasticNetCV(
+                l1_ratio=[0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0],
+                alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1,
+            ),
+        ),
+    ]
 )
-en.fit(X_scaled, y)
+en_pipe.fit(X.values, y)
+en = en_pipe.named_steps["model"]
 imp_en = aggregate_importance(en.coef_, X.columns)
 top_en = topk(imp_en)
 top_en_ranked = topk_ranked(imp_en)
@@ -202,16 +214,16 @@ rf_search = GridSearchCV(
     rf_base, rf_grid, cv=tscv,
     scoring="neg_mean_squared_error", n_jobs=1, refit=True,
 )
-rf_search.fit(X_scaled, y)
+rf_search.fit(X.values, y)
 print(f"      Best RF params: {rf_search.best_params_}, CV MSE={-rf_search.best_score_:.4g}")
 print("      Computing permutation importance (n_repeats=10, manual)...")
 rf_best = rf_search.best_estimator_
 rng_perm = np.random.default_rng(SEED)
-baseline = np.mean((y.values - rf_best.predict(X_scaled)) ** 2)
-perm_scores = np.zeros((X_scaled.shape[1], 10))
-for j in range(X_scaled.shape[1]):
+baseline = np.mean((y.values - rf_best.predict(X.values)) ** 2)
+perm_scores = np.zeros((X.shape[1], 10))
+for j in range(X.shape[1]):
     for r in range(10):
-        X_perm = X_scaled.copy()
+        X_perm = X.values.copy()
         X_perm[:, j] = rng_perm.permutation(X_perm[:, j])
         perm_scores[j, r] = np.mean((y.values - rf_best.predict(X_perm)) ** 2) - baseline
     if j % 100 == 0:
@@ -226,6 +238,9 @@ print(f"      RF top-35 head: {top_rf[:5]}")
 # 4. Lasso stability selection
 # -----------------------------------------------------------------------------
 print("\n[4/4] Lasso stability selection (100 resamples, 75% subsample)...")
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X.values)
+X_df = pd.DataFrame(X_scaled, columns=X.columns)
 stab_freq = stability_selection_lasso(X_df, y, alpha=lasso.alpha_,
                                        n_resamples=100, frac=0.75, k=TOP_K)
 top_stab_ranked_pairs = sorted(stab_freq.items(), key=lambda x: x[1], reverse=True)[:TOP_K]

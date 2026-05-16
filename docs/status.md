@@ -23,6 +23,7 @@ Paper-facing results analysis:
 
 ```text
 docs/results_analysis.md
+docs/leakage_audit.md
 ```
 
 Main evaluator:

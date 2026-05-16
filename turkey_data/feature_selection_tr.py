@@ -30,6 +30,7 @@ from sklearn.linear_model import LassoCV, ElasticNetCV, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 
 # Use US pipeline helpers — never redefine locally
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "data"))
@@ -131,18 +132,18 @@ def main():
     y           = flat[TARGET]
     print(f"Flattened: {len(feat_cols)} features, {len(flat)} quarterly obs")
 
-    # Scale
-    scaler   = StandardScaler()
-    X_scaled = scaler.fit_transform(X_raw)
-    X_df     = pd.DataFrame(X_scaled, columns=feat_cols)
     tscv     = TimeSeriesSplit(n_splits=5)
     alpha_path = np.logspace(-6, 0, 100)
 
     # 5. LassoCV
     print(f"\n[1/4] Fitting LassoCV...")
-    lasso = LassoCV(alphas=alpha_path, cv=tscv, random_state=SEED,
-                    max_iter=20000, n_jobs=1)
-    lasso.fit(X_scaled, y)
+    lasso_pipe = Pipeline([
+        ("scaler", StandardScaler()),
+        ("model", LassoCV(alphas=alpha_path, cv=tscv, random_state=SEED,
+                          max_iter=20000, n_jobs=1)),
+    ])
+    lasso_pipe.fit(X_raw, y)
+    lasso = lasso_pipe.named_steps["model"]
     imp_lasso      = aggregate_importance(lasso.coef_, feat_cols)
     top_lasso      = topk(imp_lasso)
     top_lasso_rank = topk_ranked(imp_lasso)
@@ -150,11 +151,15 @@ def main():
 
     # 6. ElasticNetCV
     print(f"\n[2/4] Fitting ElasticNetCV...")
-    en = ElasticNetCV(
-        l1_ratio=[0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0],
-        alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1,
-    )
-    en.fit(X_scaled, y)
+    en_pipe = Pipeline([
+        ("scaler", StandardScaler()),
+        ("model", ElasticNetCV(
+            l1_ratio=[0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0],
+            alphas=alpha_path, cv=tscv, random_state=SEED, max_iter=20000, n_jobs=1,
+        )),
+    ])
+    en_pipe.fit(X_raw, y)
+    en = en_pipe.named_steps["model"]
     imp_en      = aggregate_importance(en.coef_, feat_cols)
     top_en      = topk(imp_en)
     top_en_rank = topk_ranked(imp_en)
@@ -167,17 +172,17 @@ def main():
     rf_grid = {"max_features": ["sqrt", 0.33], "min_samples_leaf": [1, 3, 5]}
     rf_search = GridSearchCV(rf_base, rf_grid, cv=tscv,
                              scoring="neg_mean_squared_error", n_jobs=1, refit=True)
-    rf_search.fit(X_scaled, y)
+    rf_search.fit(X_raw, y)
     print(f"      Best RF: {rf_search.best_params_}, CV MSE={-rf_search.best_score_:.4g}")
 
     print(f"      Computing permutation importance (n_repeats=10, manual)...")
     rf_best    = rf_search.best_estimator_
     rng_perm   = np.random.default_rng(SEED)
-    baseline   = np.mean((y.values - rf_best.predict(X_scaled)) ** 2)
-    perm_scores = np.zeros((X_scaled.shape[1], 10))
-    for j in range(X_scaled.shape[1]):
+    baseline   = np.mean((y.values - rf_best.predict(X_raw)) ** 2)
+    perm_scores = np.zeros((X_raw.shape[1], 10))
+    for j in range(X_raw.shape[1]):
         for r in range(10):
-            X_perm = X_scaled.copy()
+            X_perm = X_raw.copy()
             X_perm[:, j] = rng_perm.permutation(X_perm[:, j])
             perm_scores[j, r] = np.mean((y.values - rf_best.predict(X_perm)) ** 2) - baseline
         if j % 50 == 0:
@@ -190,6 +195,9 @@ def main():
 
     # 8. Lasso stability selection
     print(f"\n[4/4] Lasso stability selection (100 resamples, 75% subsample)...")
+    scaler   = StandardScaler()
+    X_scaled = scaler.fit_transform(X_raw)
+    X_df     = pd.DataFrame(X_scaled, columns=feat_cols)
     stab_freq  = stability_selection_lasso(X_df, y, alpha=lasso.alpha_)
     stab_pairs = sorted(stab_freq.items(), key=lambda x: x[1], reverse=True)[:TOP_K]
     top_stab      = [f for f, _ in stab_pairs]

@@ -22,6 +22,8 @@ Expected:
 - 5 main paper PNG figures in `figures/`.
 - 7 results-analysis PNG figures in `figures/`.
 - 3 US-only robustness PNG figures in `figures/`.
+- `docs/leakage_audit.md` documents no direct test-window leakage, remaining
+  pseudo-real-time limitations, and the fold-safe CV preprocessing fix.
 
 ## Repository Hygiene
 
