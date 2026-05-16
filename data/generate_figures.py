@@ -22,7 +22,6 @@ import pandas as pd
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(BASE)
-IMAGES_DIR = os.path.join(ROOT, "images")
 FIGURES_DIR = os.path.join(ROOT, "figures")
 
 MODELS = [
@@ -141,7 +140,6 @@ def setup_plotting() -> None:
 
 
 def ensure_dirs() -> None:
-    os.makedirs(IMAGES_DIR, exist_ok=True)
     os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
@@ -173,125 +171,6 @@ def load_eval(country: Country) -> pd.DataFrame:
 
 def full_m3(eval_df: pd.DataFrame) -> pd.DataFrame:
     return eval_df[(eval_df["panel"] == "full") & (eval_df["vintage"] == "m3")].copy()
-
-
-def revision_volatility(country: Country, model: str) -> float:
-    frames = [
-        load_prediction(country, model, vintage)[["date", "prediction"]].rename(
-            columns={"prediction": vintage}
-        )
-        for vintage in ["m1", "m2", "m3"]
-    ]
-    merged = frames[0].merge(frames[1], on="date").merge(frames[2], on="date")
-    revisions = pd.concat(
-        [(merged["m2"] - merged["m1"]).abs(), (merged["m3"] - merged["m2"]).abs()],
-        axis=0,
-    )
-    return float(revisions.mean())
-
-
-def save_data_example() -> str:
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharey=False)
-    for ax, country in zip(axes, COUNTRIES):
-        actual = load_prediction(country, "arma", "m3")[["date", "actual"]]
-        ax.plot(actual["date"], actual["actual"], color="#2f2f2f", lw=1.8)
-        ax.axhline(0, color="#8a8a8a", lw=0.8)
-        ax.set_title(f"{country.label}: real GDP target")
-        ax.set_xlabel("Forecast date")
-        ax.set_ylabel("Quarterly transformed growth")
-    fig.suptitle("Evaluation target series used in the finalized pipeline", y=1.02)
-    fig.tight_layout()
-    out = os.path.join(IMAGES_DIR, "data_example.png")
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
-    return out
-
-
-def save_revision_scatter(country: Country, eval_df: pd.DataFrame, name: str) -> str:
-    df = full_m3(eval_df)
-    df["revision_volatility"] = [
-        revision_volatility(country, model) for model in df["model"]
-    ]
-    df = df.sort_values("RMSFE")
-
-    fig, ax = plt.subplots(figsize=(8, 5.2))
-    for family, color in FAMILY_COLORS.items():
-        part = df[df["model"].map(MODEL_FAMILIES) == family]
-        if part.empty:
-            continue
-        ax.scatter(
-            part["revision_volatility"],
-            part["RMSFE"],
-            s=72,
-            c=color,
-            edgecolor="white",
-            linewidth=0.8,
-            alpha=0.95,
-            label=family,
-        )
-
-    label_models = set(df.head(5)["model"])
-    label_models.add("arma")
-    label_models.add(df.loc[df["RMSFE"].idxmax(), "model"])
-    label_models.add(df.loc[df["revision_volatility"].idxmax(), "model"])
-    for _, row in df[df["model"].isin(label_models)].iterrows():
-        ax.annotate(
-            MODEL_LABELS[row["model"]],
-            (row["revision_volatility"], row["RMSFE"]),
-            textcoords="offset points",
-            xytext=(4, 3),
-            fontsize=8,
-        )
-    ax.set_title(f"{country.label}: error vs nowcast revision volatility")
-    ax.set_xlabel("Average absolute nowcast revision across m1/m2/m3")
-    ax.set_ylabel("Full-panel RMSFE, m3 vintage")
-    ax.legend(frameon=False, fontsize=7, loc="best")
-    ax.grid(alpha=0.25)
-    fig.tight_layout()
-    out = os.path.join(IMAGES_DIR, name)
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
-    return out
-
-
-def save_appendix_model_plot(model: str, index: int) -> str:
-    fig, axes = plt.subplots(2, 1, figsize=(11, 7), sharex=False)
-    vintage_colors = {"m1": "#4c78a8", "m2": "#f58518", "m3": "#54a24b"}
-
-    for ax, country in zip(axes, COUNTRIES):
-        frames = {v: load_prediction(country, model, v) for v in ["m1", "m2", "m3"]}
-        base = frames["m3"]
-        ax.plot(base["date"], base["actual"], color="#1f1f1f", lw=2.0, label="Actual")
-        for vintage, df in frames.items():
-            ax.plot(
-                df["date"],
-                df["prediction"],
-                color=vintage_colors[vintage],
-                lw=1.25,
-                alpha=0.9,
-                label=vintage,
-            )
-        ax.axhline(0, color="#9a9a9a", lw=0.7)
-        ax.set_title(country.label)
-        ax.set_ylabel("Growth")
-        ax.grid(alpha=0.2)
-
-    axes[-1].set_xlabel("Forecast date")
-    handles, labels = axes[0].get_legend_handles_labels()
-    fig.suptitle(f"{MODEL_LABELS[model]}: actual vs nowcasts by vintage", y=0.985)
-    fig.legend(
-        handles,
-        labels,
-        loc="upper center",
-        bbox_to_anchor=(0.5, 0.945),
-        ncol=4,
-        frameon=False,
-    )
-    fig.tight_layout(rect=[0, 0, 1, 0.88])
-    out = os.path.join(IMAGES_DIR, f"app{index}.png")
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
-    return out
 
 
 def save_full_m3_rankings(eval_us: pd.DataFrame, eval_tr: pd.DataFrame) -> str:
@@ -453,10 +332,6 @@ def save_family_summary(eval_us: pd.DataFrame, eval_tr: pd.DataFrame) -> str:
 def write_figure_index(paths: Iterable[str], appendix_models: List[str]) -> str:
     index_path = os.path.join(FIGURES_DIR, "FIGURE_INDEX.md")
     rel_paths = [os.path.relpath(path, ROOT).replace("\\", "/") for path in paths]
-    appendix_lines = [
-        f"- `images/app{i}.png`: {MODEL_LABELS[model]} actual-vs-nowcast appendix plot."
-        for i, model in enumerate(appendix_models, start=1)
-    ]
     body = [
         "# Figure Index",
         "",
@@ -470,17 +345,9 @@ def write_figure_index(paths: Iterable[str], appendix_models: List[str]) -> str:
         "- `figures/vintage_rmsfe_profiles.png`: full-panel RMSFE across m1/m2/m3 for ARMA and top models.",
         "- `figures/model_family_relative_rmsfe.png`: family-level average relative RMSFE.",
         "",
-        "## Original-Repo-Style README Figures",
+        "## Results Analysis Figures",
         "",
-        "- `images/data_example.png`: target-series overview for the evaluation windows.",
-        "- `images/fig1.png`: United States RMSFE vs nowcast revision volatility.",
-        "- `images/fig2.png`: Turkey RMSFE vs nowcast revision volatility.",
-        "",
-        "The scatter x-axis is average absolute nowcast revision across m1/m2/m3 for the same forecast date. It is not historical GDP data-revision volatility.",
-        "",
-        "## Appendix Nowcast Plots",
-        "",
-        *appendix_lines,
+        "Run `python data/generate_results_visuals.py` for period rankings, vintage gains, post-release robustness, COVID sensitivity, DFM validation selection, and US combination figures.",
         "",
         "## Files Written",
         "",
@@ -500,20 +367,12 @@ def main() -> None:
     eval_tr = load_eval(COUNTRIES[1])
 
     paths: List[str] = []
-    paths.append(save_data_example())
-    paths.append(save_revision_scatter(COUNTRIES[0], eval_us, "fig1.png"))
-    paths.append(save_revision_scatter(COUNTRIES[1], eval_tr, "fig2.png"))
-
-    appendix_models = sorted(MODELS)
-    for i, model in enumerate(appendix_models, start=1):
-        paths.append(save_appendix_model_plot(model, i))
-
     paths.append(save_full_m3_rankings(eval_us, eval_tr))
     paths.append(save_relative_comparison(eval_us, eval_tr))
     paths.append(save_panel_heatmaps(eval_us, eval_tr))
     paths.append(save_vintage_profiles(eval_us, eval_tr))
     paths.append(save_family_summary(eval_us, eval_tr))
-    index_path = write_figure_index(paths, appendix_models)
+    index_path = write_figure_index(paths, [])
 
     print(f"Wrote {len(paths)} figure files")
     print(f"Wrote {index_path}")

@@ -126,15 +126,17 @@ Remaining caveat:
 Previous issue:
 
 - Code used only 19 Cat3 variables despite documentation implying a broader DFM set.
+- The first repaired Cat3 DFM remained weak in the Turkey test sample.
 
 Repair:
 
-- Uses the complete 22-variable Cat3 monthly set plus target.
+- Final output uses a validation-selected Cat2 monthly predictor set plus target.
+- Cat2 was selected over selected10 and Cat3 using 2012-2017 validation RMSFE averaged over `m1`/`m2`/`m3`, then retrained through 2017 before the 2018-2025 test evaluation.
 - Tier-C variables were tested but excluded because the full sparse panel fails inside `nowcastDFM`.
 
 Paper caveat:
 
-- Turkey DFM must be described as Cat3 + target, not a 54-variable Tier-C DFM.
+- Turkey DFM must be described as validation-selected Cat2 + target, not a 54-variable Tier-C DFM.
 
 ### BVAR
 
@@ -142,7 +144,7 @@ US:
 
 - Uses Lasso-80 reduced predictor set.
 - Full Cat3 BVAR is computationally infeasible in `mfbvar`.
-- The 2025-Q4 m3 reduced-BVAR fit hits a singular covariance matrix; the saved prediction uses the documented Cat2 fallback forecast.
+- The 2025-Q4 m3 and post1 reduced-BVAR fits hit singular covariance matrices; the saved predictions use documented Cat2 fallback forecasts.
 
 Turkey:
 
@@ -167,8 +169,8 @@ Outputs:
 
 Final evaluator result:
 
-- US: 204 rows = 17 models x 3 vintages x 4 panels
-- Turkey: 204 rows = 17 models x 3 vintages x 4 panels
+- US: 272 rows = 17 models x 4 vintages x 4 panels
+- Turkey: 340 rows = 17 models x 5 vintages x 4 panels
 - Relative RMSFE vs ARMA populated for all rows
 - DM statistics and p-values populated for all non-ARMA rows
 
@@ -178,10 +180,9 @@ The original repository includes README-level scatter plots and appendix nowcast
 
 - `data/generate_figures.py`
 - `figures/FIGURE_INDEX.md`
-- `images/data_example.png`
-- `images/fig1.png`
-- `images/fig2.png`
-- `images/app1.png` through `images/app17.png`
+- main paper figures under `figures/`
+- results-analysis figures under `figures/results_*.png`
+- US-only robustness figures under `figures/us_improved_*.png`
 - `figures/full_m3_rmsfe_rankings.png`
 - `figures/full_m3_relative_rmsfe_us_tr.png`
 - `figures/panel_relative_rmsfe_heatmaps.png`
@@ -190,7 +191,7 @@ The original repository includes README-level scatter plots and appendix nowcast
 
 Validation result:
 
-- 25 PNG figure files were regenerated from the final prediction and evaluation CSVs.
+- Main and results-analysis PNG figure files were regenerated from the final prediction and evaluation CSVs.
 - All generated PNGs were opened successfully with PIL and have nonzero dimensions.
 - The original-style scatter plots use **nowcast revision volatility across m1/m2/m3**, not historical GDP data revisions. This distinction should be stated if the figures are used in the paper.
 
@@ -216,7 +217,7 @@ Interpretation:
 
 - US results are consistent with Hopp-style evidence that LSTM and BVAR can be very competitive in a data-rich setting.
 - Turkey results are plausible for a shorter, more volatile emerging-market sample: parsimonious econometric and mixed-frequency models are more competitive.
-- MLP m1/m2 instability should be treated as an empirical finding/caveat, not hidden.
+- Turkey MLP m1/m2 instability should be treated as an empirical finding/caveat, not hidden. US MLP was stabilized in the 2026-05-14 rerun.
 
 ## Paper-Readiness Caveats
 
@@ -225,10 +226,10 @@ These caveats should be stated explicitly in the methodology or limitations sect
 1. The exercise uses final revised GDP values as targets, not real-time historical GDP vintages.
 2. The information sets are simulated using publication lags and ragged-edge masking.
 3. US BVAR and Turkey BVAR are reduced-dimensional models.
-4. Turkey DFM excludes Tier-C variables after package failure on the full sparse panel.
-5. Turkey MIDAS-ML uses a fixed sparse-group-lasso penalty.
+4. Turkey DFM uses validation-selected Cat2 predictors and excludes Tier-C variables after package failure on the full sparse panel.
+5. Turkey MIDAS-ML uses a documented fixed sparse-group-lasso penalty after `cv.sglfit` aborted during the post-release rerun.
 6. Diebold-Mariano results are computed with a simple iid loss-differential variance; small-panel p-values should be interpreted cautiously.
-7. MLP m1/m2 results are unstable and should not be overinterpreted.
+7. Turkey MLP m1/m2 results are unstable and should not be overinterpreted; US MLP should be interpreted from the updated stabilized outputs.
 
 ## Archived Non-Core Files
 

@@ -25,7 +25,9 @@ import pandas as pd
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "data"))
 from helpers import (
     gen_lagged_data,
+    gen_vintage_data,
     flatten_data,
+    make_supervised_vintage_frame,
     mean_fill_dataset,
     split_for_scaler,
 )

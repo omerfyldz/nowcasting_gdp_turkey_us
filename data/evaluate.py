@@ -46,7 +46,7 @@ MODELS = [
     "midasml",
     "dfm",
 ]
-VINTAGES = ["m1", "m2", "m3"]
+DEFAULT_VINTAGES = ["m1", "m2", "m3"]
 REQUIRED_COLUMNS = ["date", "actual", "prediction"]
 
 
@@ -60,6 +60,7 @@ class CountryConfig:
     expected_end: str
     expected_rows: int
     panels: Dict[str, Tuple[str, str]]
+    vintages: Tuple[str, ...] = tuple(DEFAULT_VINTAGES)
     turkey_filenames: bool = False
 
 
@@ -78,6 +79,7 @@ COUNTRIES = [
             "post_covid": ("2022-01-01", "2025-12-31"),
             "full": ("2017-01-01", "2025-12-31"),
         },
+        vintages=("m1", "m2", "m3", "post1"),
     ),
     CountryConfig(
         code="tr",
@@ -93,6 +95,7 @@ COUNTRIES = [
             "post_covid": ("2022-01-01", "2025-12-31"),
             "full": ("2018-01-01", "2025-12-31"),
         },
+        vintages=("m1", "m2", "m3", "post1", "post2"),
         turkey_filenames=True,
     ),
 ]
@@ -176,6 +179,10 @@ def audit_file(config: CountryConfig, model: str, vintage: str) -> List[str]:
     if len(df) != config.expected_rows:
         issues.append(f"{label}: expected {config.expected_rows} rows, found {len(df)}")
 
+    duplicate_count = int(df["date"].duplicated().sum())
+    if duplicate_count:
+        issues.append(f"{label}: date has {duplicate_count} duplicate rows")
+
     if len(df) > 0:
         if df["date"].iloc[0] != pd.Timestamp(config.expected_start):
             issues.append(
@@ -204,7 +211,7 @@ def audit_file(config: CountryConfig, model: str, vintage: str) -> List[str]:
 def audit_country(config: CountryConfig) -> None:
     issues: List[str] = []
     for model in MODELS:
-        for vintage in VINTAGES:
+        for vintage in config.vintages:
             issues.extend(audit_file(config, model, vintage))
 
     if issues:
@@ -218,7 +225,7 @@ def evaluate_country(config: CountryConfig) -> pd.DataFrame:
     rows = []
     cache: Dict[Tuple[str, str], pd.DataFrame] = {}
     for model in MODELS:
-        for vintage in VINTAGES:
+        for vintage in config.vintages:
             df = load_prediction(config, model, vintage)
             df["actual"] = pd.to_numeric(df["actual"], errors="coerce")
             df["prediction"] = pd.to_numeric(df["prediction"], errors="coerce")
@@ -253,7 +260,7 @@ def evaluate_country(config: CountryConfig) -> pd.DataFrame:
     for model in MODELS:
         if model == "arma":
             continue
-        for vintage in VINTAGES:
+        for vintage in config.vintages:
             df_model = cache[(model, vintage)]
             df_arma = cache[("arma", vintage)]
             merged = df_model.merge(df_arma, on="date", suffixes=("_m", "_a"))
@@ -307,12 +314,13 @@ def write_summary(all_results: Dict[str, pd.DataFrame]) -> None:
         "## Scope Notes",
         "",
         "- US BVAR uses a Lasso-80 reduced predictor set because full Cat3 BVAR is computationally infeasible in `mfbvar`.",
-        "- US BVAR 2025-Q4 m3 uses the documented Cat2 fallback because the reduced BVAR covariance matrix is singular at that vintage.",
+        "- US BVAR 2025-Q4 m3 and post1 use documented Cat2 fallbacks because the reduced BVAR covariance matrix is singular at those vintages.",
         "- Turkey BVAR uses the locked Cat2 predictor set plus the GDP target for the same computational reason.",
-        "- Turkey DFM uses complete Cat3 monthly predictors plus target; Tier-C variables were tested but excluded after `nowcastDFM` failed on the full sparse panel.",
-        "- Turkey MIDAS-ML uses fixed-penalty `sglfit` after rolling `cv.sglfit` did not complete.",
+        "- Turkey DFM uses a validation-selected Cat2 monthly predictor set plus target; Cat2 was selected on 2012-2017 validation RMSFE over m1/m2/m3, then retrained through 2017 for 2018-2025 testing. Tier-C variables remain excluded after `nowcastDFM` failed on the full sparse panel.",
+        "- Turkey MIDAS-ML uses documented fixed-penalty `sglfit(lambda = 0.01)` after `cv.sglfit` aborted the Jupyter process during the post-release rerun.",
         "- R MIDAS/MIDAS-ML/DFM/BVAR notebooks use explicit target-quarter and vintage-date masking via `gen_vintage_data`.",
-        "- MLP m1/m2 outputs are finite but unstable in both countries; interpret them as model instability rather than a headline result.",
+        "- Turkey `post1` and `post2` are robustness horizons, not replacements for the symmetric `m1`/`m2`/`m3` cross-country benchmark.",
+        "- Turkey MLP m1/m2 outputs are finite but unstable; interpret them as model instability rather than a headline result. US MLP is stabilized in the current rerun.",
         "- Raw prediction filenames are preserved; Turkey legacy names are handled by the evaluator.",
         "",
         "## Headline Rankings",

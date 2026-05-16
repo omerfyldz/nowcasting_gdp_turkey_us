@@ -8,15 +8,20 @@ Run from the repository root:
 
 ```bash
 python data/evaluate.py
+python data/us_improvement.py
 python data/generate_figures.py
+python data/generate_results_visuals.py
 ```
 
 Expected:
 
-- `data/evaluation_results_us.csv`: 204 rows.
-- `turkey_data/evaluation_results_tr.csv`: 204 rows.
+- `data/evaluation_results_us.csv`: 272 rows.
+- `turkey_data/evaluation_results_tr.csv`: 340 rows.
+- `data/evaluation_results_us_improved.csv`: 576 rows.
 - `evaluation_summary.md` regenerated.
-- 25 PNG files across `images/` and `figures/`.
+- 5 main paper PNG figures in `figures/`.
+- 7 results-analysis PNG figures in `figures/`.
+- 3 US-only robustness PNG figures in `figures/`.
 
 ## Repository Hygiene
 

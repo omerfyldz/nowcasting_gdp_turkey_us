@@ -11,7 +11,6 @@ This project is organized as a research-code repository with active pipeline fil
 - `predictions/`: finalized US prediction CSVs.
 - `turkey_predictions/`: finalized Turkey prediction CSVs.
 - `figures/`: main paper-facing generated figures.
-- `images/`: README-style and appendix generated plots.
 - `docs/`: status, audit, and layout documentation.
 
 ## Archived Directories

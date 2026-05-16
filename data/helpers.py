@@ -8,7 +8,7 @@ Functions that are IDENTICAL to the original repo:
     gen_lagged_data, mean_fill_dataset, flatten_data
 
 Functions added for Pipeline B:
-    get_features, split_for_scaler, load_data
+    get_features, split_for_scaler, load_data, gen_vintage_data
 """
 import json
 import os
@@ -129,6 +129,84 @@ def gen_lagged_data(metadata, data, last_date, lag):
         pub_lag = metadata.loc[metadata.series == col, "months_lag"].values[0]
         lagged_data.loc[(len(lagged_data) - pub_lag + lag - 1):, col] = np.nan
     return lagged_data
+
+
+def gen_vintage_data(metadata, data, target_date, vintage_date):
+    """
+    Apply an explicit target-quarter / information-date ragged-edge mask.
+
+    This is the Python analogue of data/helpers.R::gen_vintage_data. It keeps
+    rows through the target quarter so current-quarter methods can form a
+    nowcast, while masking each series according to what would have been
+    available at the simulated vintage month.
+
+    Parameters
+    ----------
+    metadata : pd.DataFrame  -- must have 'series' and 'months_lag'
+    data : pd.DataFrame      -- monthly dataframe with 'date' column
+    target_date : date-like  -- quarter-end target month retained in output
+    vintage_date : date-like -- simulated information date
+
+    Returns
+    -------
+    pd.DataFrame with rows through target_date and trailing unavailable values
+    set to NaN. For months_lag=0, the current vintage month is still treated as
+    not yet released, matching the R helper and original ragged-edge convention.
+    """
+    target_date = pd.Timestamp(target_date)
+    vintage_date = pd.Timestamp(vintage_date)
+    vintage_data = data.loc[data.date <= target_date, :].reset_index(drop=True).copy()
+
+    lag_lookup = metadata.set_index("series")["months_lag"].to_dict()
+    for col in vintage_data.columns[1:]:
+        if col not in lag_lookup:
+            continue
+        available_through = vintage_date - pd.DateOffset(months=int(lag_lookup[col]) + 1)
+        vintage_data.loc[vintage_data["date"] > available_through, col] = np.nan
+
+    return vintage_data
+
+
+def make_supervised_vintage_frame(
+    metadata,
+    data,
+    target_variable,
+    features,
+    train_start_date,
+    target_date,
+    vintage_date,
+    n_lags,
+):
+    """
+    Build train/test matrices for flattened supervised models at a target quarter.
+
+    The returned test row is always the target quarter row, while `vintage_date`
+    controls which monthly indicators are visible. This matters for post-quarter
+    horizons such as post1: the information set is later, but the forecast target
+    remains the same GDP quarter.
+    """
+    target_date = pd.Timestamp(target_date)
+    vintage_date = pd.Timestamp(vintage_date)
+    cols = ["date", target_variable] + [
+        col for col in features if col in data.columns and col != target_variable
+    ]
+    raw = data.loc[
+        (data["date"] >= pd.Timestamp(train_start_date)) & (data["date"] <= target_date),
+        cols,
+    ].reset_index(drop=True)
+    vintage = gen_vintage_data(metadata, raw, target_date, vintage_date)
+    vintage.loc[vintage["date"] == target_date, target_variable] = np.nan
+
+    train_context = vintage.loc[vintage["date"] < target_date].copy()
+    filled = mean_fill_dataset(train_context, vintage)
+    flat = flatten_data(filled, target_variable, n_lags)
+    flat.loc[flat["date"] == target_date, target_variable] = np.nan
+
+    quarter_rows = flat["date"].dt.month.isin([3, 6, 9, 12])
+    train_flat = flat.loc[quarter_rows & (flat["date"] < target_date), :].copy()
+    train_flat = train_flat.dropna(axis=0, how="any").reset_index(drop=True)
+    test_flat = flat.loc[flat["date"] == target_date, :].tail(1).copy()
+    return train_flat, test_flat, filled
 
 
 def flatten_data(data, target_variable, n_lags):

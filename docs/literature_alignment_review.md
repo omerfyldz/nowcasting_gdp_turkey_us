@@ -89,8 +89,8 @@ The literature does not support a blanket claim that machine learning always dom
 This supports our findings:
 
 - US: LSTM and BVAR perform strongly in a richer data environment.
-- Turkey: MIDAS, VAR, LSTM, and BVAR dominate; simpler/mixed-frequency methods remain competitive.
-- MLP instability should be discussed as model instability/overfitting risk.
+- Turkey: in the final five-vintage rerun, Lasso, ElasticNet, and BVAR lead the full-sample `m3` ranking; MIDAS, VAR, and LSTM remain competitive but are no longer the top three. This strengthens the conclusion that parsimonious/reduced-dimensional models are competitive in the Turkey sample.
+- Turkey MLP early-vintage instability should be discussed as model instability/overfitting risk. US MLP is stabilized in the current rerun.
 
 ### 5. Turkey-Specific Literature Supports Our Country Choice
 
@@ -167,7 +167,7 @@ Suggested wording:
 The literature includes large BVAR nowcasting systems, but they require appropriate shrinkage and computational infrastructure. Our `mfbvar` implementation could not handle full panels reliably, so:
 
 - US BVAR uses Lasso-80 predictors.
-- US BVAR 2025-Q4 m3 uses a Cat2 fallback.
+- US BVAR 2025-Q4 m3 and post1 use Cat2 fallbacks.
 - Turkey BVAR uses locked Cat2 predictors plus target.
 
 Assessment:
@@ -178,19 +178,23 @@ Suggested wording:
 
 > BVAR results refer to reduced-dimensional mixed-frequency BVAR implementations, not full-panel large BVAR systems.
 
-### 6. Turkey DFM Is Constrained
+### 6. Turkey DFM Is Constrained But Validation-Selected
 
-DFMs are central in the literature. Our Turkey DFM uses complete Cat3 monthly predictors plus target, but excludes Tier-C variables because `nowcastDFM` failed on the sparse broader panel.
+DFMs are central in the literature. Our final Turkey DFM uses a validation-selected Cat2 monthly predictor set plus target. Cat2 was selected over selected10 and Cat3 using 2012-2017 validation RMSFE averaged over `m1`/`m2`/`m3`, then retrained through 2017 for the 2018-2025 test evaluation.
+
+Tier-C variables remain excluded because `nowcastDFM` failed on the sparse broader panel.
 
 Assessment:
 
 Do not claim "DFMs perform poorly in Turkey" generally. Claim:
 
-> The implemented Turkey DFM specification underperforms in our sample.
+> The implemented Turkey DFM is a feasible, validation-selected factor-model benchmark; it improves substantially over the initial Cat3 diagnostic but remains constrained by package feasibility and the exclusion of short-history Tier-C variables.
 
 ### 7. Turkey MIDAS-ML Is Constrained
 
-MIDAS-ML uses fixed-penalty `sglfit`, not rolling cross-validated `cv.sglfit`.
+MIDAS-ML uses documented fixed-penalty `sglfit(lambda = 0.01)`, not rolling cross-validated `cv.sglfit`.
+
+During the Turkey post-release rerun, `cv.sglfit` was attempted but aborted the Jupyter process with a low-level ZMQ assertion before writing outputs. The fixed-penalty implementation should therefore be described as a package/computation fallback rather than as evidence against MIDAS-ML as a model class.
 
 Assessment:
 
@@ -290,7 +294,7 @@ Avoid:
 1. Make "pseudo-real-time" explicit in abstract, methodology, and limitations.
 2. Add a table of model implementation caveats:
    - reduced BVARs;
-   - Turkey DFM Cat3-only;
+   - Turkey DFM validation-selected Cat2-only;
    - fixed-penalty Turkey MIDAS-ML;
    - no bridge-equation subcomponent system;
    - no release-by-release news decomposition.
