@@ -1,0 +1,19 @@
+﻿START us model_lasso.ipynb 2026-05-16T23:47:48.7527348+03:00
+OK us model_lasso.ipynb 2026-05-16T23:49:01.9482840+03:00
+START us model_ridge.ipynb 2026-05-16T23:49:01.9992825+03:00
+OK us model_ridge.ipynb 2026-05-16T23:49:53.6235330+03:00
+START us model_elasticnet.ipynb 2026-05-16T23:49:53.6285337+03:00
+OK us model_elasticnet.ipynb 2026-05-16T23:50:45.6562587+03:00
+START us model_mlp.ipynb 2026-05-16T23:50:45.6622582+03:00
+FAILED us model_mlp.ipynb 2026-05-16T23:51:11.8625190+03:00 exit=1
+START us model_mlp.ipynb 2026-05-16T23:51:57.8935219+03:00
+OK us model_mlp.ipynb 2026-05-17T02:28:53.8551246+03:00
+START tr model_lasso_tr.ipynb 2026-05-17T02:42:28.0745266+03:00
+OK tr model_lasso_tr.ipynb 2026-05-17T02:43:08.5748763+03:00
+START tr model_ridge_tr.ipynb 2026-05-17T02:43:08.5978786+03:00
+OK tr model_ridge_tr.ipynb 2026-05-17T02:43:43.8148845+03:00
+START tr model_elasticnet_tr.ipynb 2026-05-17T02:43:43.8228853+03:00
+OK tr model_elasticnet_tr.ipynb 2026-05-17T02:44:24.7674438+03:00
+START tr model_mlp_tr.ipynb 2026-05-17T02:44:24.7734456+03:00
+OK tr model_mlp_tr.ipynb 2026-05-17T04:36:33.6875674+03:00
+ALL_OK_TURKEY 2026-05-17T04:36:33.7055636+03:00
