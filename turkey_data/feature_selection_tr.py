@@ -186,7 +186,7 @@ def main():
             X_perm[:, j] = rng_perm.permutation(X_perm[:, j])
             perm_scores[j, r] = np.mean((y.values - rf_best.predict(X_perm)) ** 2) - baseline
         if j % 50 == 0:
-            print(f"        ... feature {j}/{X_scaled.shape[1]}")
+            print(f"        ... feature {j}/{X_raw.shape[1]}")
     perm_means  = perm_scores.mean(axis=1)
     imp_rf      = aggregate_importance(perm_means, feat_cols)
     top_rf      = topk(imp_rf)
