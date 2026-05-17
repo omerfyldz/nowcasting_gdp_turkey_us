@@ -33,6 +33,18 @@ cat3_features <- c(
 
 candidate_specs <- list(
   cat2 = cat2_features,
+  cat2_plus_reer = unique(c(cat2_features, "reer")),
+  cat2_plus_m3 = unique(c(cat2_features, "m3")),
+  cat2_plus_total_prod = unique(c(cat2_features, "total_prod")),
+  cat2_plus_unemp_rate = unique(c(cat2_features, "unemp_rate")),
+  cat2_plus_reer_m3 = unique(c(cat2_features, "reer", "m3")),
+  cat2_plus_reer_total_prod = unique(c(cat2_features, "reer", "total_prod")),
+  cat2_plus_stability_top3 = unique(c(cat2_features, "reer", "m3", "total_prod")),
+  cat2_plus_stability_top5 = unique(c(cat2_features, "reer", "m3", "total_prod", "altin_rezerv_var", "maden_ciro_endeksi_sa")),
+  stability_top7 = c("ipi_sa", "cpi_sa", "reer", "usd_try_avg", "m3", "total_prod", "altin_rezerv_var"),
+  rf_top7 = c("fin_acc", "ipi_sa", "reer", "usd_try_avg", "altin_rezerv_var", "total_prod", "bist100"),
+  real_activity_small = c("ipi_sa", "total_prod", "auto_prod", "maden_ciro_endeksi_sa", "tourist", "tax"),
+  macro_financial_small = c("ipi_sa", "usd_try_avg", "cpi_sa", "fin_acc", "reer", "m3", "bist100"),
   selected10 = selected10_features,
   cat3 = cat3_features
 )
@@ -176,18 +188,32 @@ validation_results <- list()
 
 for (spec_name in names(candidate_specs)) {
   cat("VALIDATION SPEC", spec_name, "\n")
-  objects <- make_dfm_objects(
-    features = candidate_specs[[spec_name]],
-    train_end_date = "2011-12-31",
-    data_end_date = validation_end_date,
-    max_iter = 500
-  )
-  preds <- predict_spec(objects, validation_dates)
-  scores <- score_predictions(preds, objects$data, "validation")
-  scores$spec <- spec_name
-  scores$selection_RMSFE <- mean(scores$RMSFE[scores$vintage %in% selection_vintages], na.rm = TRUE)
-  validation_results[[spec_name]] <- scores
-  write.csv(preds, file.path(out_dir, paste0("validation_predictions_", spec_name, ".csv")), row.names = FALSE)
+  spec_result <- tryCatch({
+    objects <- make_dfm_objects(
+      features = candidate_specs[[spec_name]],
+      train_end_date = "2011-12-31",
+      data_end_date = validation_end_date,
+      max_iter = 500
+    )
+    preds <- predict_spec(objects, validation_dates)
+    scores <- score_predictions(preds, objects$data, "validation")
+    scores$spec <- spec_name
+    scores$selection_RMSFE <- mean(scores$RMSFE[scores$vintage %in% selection_vintages], na.rm = TRUE)
+    write.csv(preds, file.path(out_dir, paste0("validation_predictions_", spec_name, ".csv")), row.names = FALSE)
+    scores
+  }, error = function(e) {
+    cat("SPEC_FAILED", spec_name, conditionMessage(e), "\n")
+    data.frame(
+      sample = "validation",
+      vintage = names(vintage_offsets),
+      n_obs = length(validation_dates),
+      RMSFE = NA_real_,
+      MAE = NA_real_,
+      spec = spec_name,
+      selection_RMSFE = NA_real_
+    )
+  })
+  validation_results[[spec_name]] <- spec_result
 }
 
 validation_summary <- bind_rows(validation_results) %>%
@@ -200,8 +226,24 @@ selection_table <- validation_summary %>%
   dplyr::filter(vintage %in% selection_vintages) %>%
   group_by(spec) %>%
   summarise(selection_RMSFE = mean(RMSFE, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::filter(is.finite(selection_RMSFE)) %>%
   dplyr::arrange(selection_RMSFE)
-selected_spec <- selection_table$spec[1]
+
+# Parsimony rule: keep the smaller baseline Cat2 panel unless a larger panel
+# improves validation RMSFE by at least 1%. This prevents a practically
+# negligible validation edge from selecting a less stable DFM panel.
+baseline_rmsfe <- selection_table$selection_RMSFE[selection_table$spec == "cat2"]
+best_spec <- selection_table$spec[1]
+best_rmsfe <- selection_table$selection_RMSFE[1]
+if (length(baseline_rmsfe) == 1 &&
+    best_spec != "cat2" &&
+    best_rmsfe >= 0.99 * baseline_rmsfe) {
+  selected_spec <- "cat2"
+  cat("PARSIMONY_RULE keeping cat2: best", best_spec,
+      "improvement is below 1% validation RMSFE threshold\n")
+} else {
+  selected_spec <- best_spec
+}
 cat("SELECTED_DFM_SPEC", selected_spec, "\n")
 write.csv(selection_table, file.path(out_dir, "selection_table.csv"), row.names = FALSE)
 
