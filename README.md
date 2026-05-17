@@ -138,17 +138,3 @@ Interpretation:
 | `docs/turkey_post_release_design.md` | Turkey `post1`/`post2` design and MIDAS-ML fallback |
 | `figures/FIGURE_INDEX.md` | Main figure inventory |
 | `figures/RESULTS_FIGURE_INDEX.md` | Results-analysis figure inventory |
-
-## Paper Positioning
-
-This project should be described as:
-
-> A pseudo-real-time comparison of 17 GDP nowcasting models for the United States and Turkey, using final revised GDP targets and simulated publication-lag information sets.
-
-It should not be described as a full central-bank nowcasting platform or a true historical-vintage real-time evaluation.
-
-## Original Benchmark Reference
-
-This project was inspired by the structure and model lineup of Hopp's open-source nowcasting benchmark:
-
-Hopp, D. (2022). *Benchmarking econometric and machine learning methodologies in nowcasting*. UNCTAD Research Paper No. 83.
