@@ -1,9 +1,5 @@
 # Comparing GDP Nowcasting Models in the United States and Türkiye
 
-Replication and empirical package for the paper **"Comparing GDP Nowcasting
-Models in the United States and Türkiye"** by **Ahmet Alkan** and **Ömer Faruk
-Yıldız** (Boğaziçi University, Department of Economics).
-
 📄 **[Read the full paper (PDF)](<paper .pdf>)**
 
 The paper runs a pseudo-real-time comparison of **seventeen GDP nowcasting models**
